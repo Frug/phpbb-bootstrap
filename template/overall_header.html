@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html dir="{S_CONTENT_DIRECTION}" lang="{S_USER_LANG}">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="distribution" content="global">
+<meta name="copyright" content="2015 Thar Shaddin Roleplaying">
+<meta name="keywords" content="roleplaying,role playing,thar,shaddin,pal tahrenor,medieval,dark,gothic,vampires,werewolves,play by post,pbp,pbem,rpg,writing,literature,interactive,fiction,fantasy,original,collaborative">
+{{ META }}
+<title>{% if UNREAD_NOTIFICATIONS_COUNT %}({UNREAD_NOTIFICATIONS_COUNT}) {% endif %}{% if not S_VIEWTOPIC and not S_VIEWFORUM %}{SITENAME} - {% endif %}{% if S_IN_MCP %}{L_MCP} - {% elseif S_IN_UCP %}{L_UCP} - {% endif %}{PAGE_TITLE}{% if S_VIEWTOPIC or S_VIEWFORUM %} - {SITENAME}{% endif %}</title>
+
+{% if S_ENABLE_FEEDS %}
+	{% if S_ENABLE_FEEDS_OVERALL %}<link rel="alternate" type="application/atom+xml" title="{L_FEED} - {SITENAME}" href="{U_FEED}">{% endif %}
+	{% if S_ENABLE_FEEDS_NEWS %}<link rel="alternate" type="application/atom+xml" title="{L_FEED} - {L_FEED_NEWS}" href="{U_FEED}?mode=news">{% endif %}
+	{% if S_ENABLE_FEEDS_FORUMS %}<link rel="alternate" type="application/atom+xml" title="{L_FEED} - {L_ALL_FORUMS}" href="{U_FEED}?mode=forums">{% endif %}
+	{% if S_ENABLE_FEEDS_TOPICS %}<link rel="alternate" type="application/atom+xml" title="{L_FEED} - {L_FEED_TOPICS_NEW}" href="{U_FEED}?mode=topics">{% endif %}
+	{% if S_ENABLE_FEEDS_TOPICS_ACTIVE %}<link rel="alternate" type="application/atom+xml" title="{L_FEED} - {L_FEED_TOPICS_ACTIVE}" href="{U_FEED}?mode=topics_active">{% endif %}
+	{% if S_ENABLE_FEEDS_FORUM and S_FORUM_ID %}<link rel="alternate" type="application/atom+xml" title="{L_FEED} - {L_FORUM} - {FORUM_NAME}" href="{U_FEED}?f={S_FORUM_ID}">{% endif %}
+	{% if S_ENABLE_FEEDS_TOPIC and S_TOPIC_ID %}<link rel="alternate" type="application/atom+xml" title="{L_FEED} - {L_TOPIC} - {TOPIC_TITLE}" href="{U_FEED}?f={S_FORUM_ID}&amp;t={S_TOPIC_ID}">{% endif %}
+{% endif %}
+{% if U_CANONICAL %}
+<link rel="canonical" href="{{ U_CANONICAL }}">
+{% endif %}
+{% if S_ALLOW_CDN %}
+<script>
+	WebFontConfig = {
+		google: {
+			families: ['Open Sans:n6']
+		}
+	};
+
+	(function(d) {
+		var wf = d.createElement('script'), s = d.scripts[0];
+		wf.src = 'https://ajax.googleapis.com/ajax/libs/webfont/1.5.18/webfont.js';
+		wf.async = true;
+		s.parentNode.insertBefore(wf, s);
+	})(document);
+</script>
+{% endif %}
+
+<script type="text/javascript" src="/js/jquery.min.js"></script>
+<script type="text/javascript" src="/js/bootstrap.min.js"></script>
+<link href="/css/bootstrap.css" rel="stylesheet">
+<link href="{{ T_STYLESHEET_LINK }}" rel="stylesheet">
+{% if S_PLUPLOAD %}
+<link href="{T_THEME_PATH}/plupload.css?assets_version={T_ASSETS_VERSION}" rel="stylesheet">
+{% endif %}
+{% EVENT overall_header_head_append %}
+{$STYLESHEETS}
+{% EVENT overall_header_stylesheets_after %}
+</head>
+<body id="phpbb" class="nojs notouch section-{SCRIPT_NAME} {BODY_CLASS}">
+<div class="skiplink"><a href="#start_here">{{ lang('SKIP') }}</a></div>
+{% EVENT overall_header_body_before %}
+
+<div id="wrap" class="container">
+	<a id="top" class="anchor" accesskey="t"></a>
+
+	<div id="page-header">
+		<div class="row">
+			<div id="site-description" class="col-md-8">
+				<h1>
+					<a href="{% if U_SITE_HOME %}{{ U_SITE_HOME }}{% else %}{{ U_INDEX }}{% endif %}"
+					title="{% if U_SITE_HOME %}{{ lang('SITE_HOME') }}{% else %}{{ lang('INDEX') }}{% endif %}">{{ SITENAME }}</a>
+				</h1>
+				<p>{{ SITE_DESCRIPTION }}</p>
+			</div>
+
+			<div class="col-md-4 search-header" id="search-box" role="search">
+				{% EVENT overall_header_searchbox_before %}
+				{% if S_DISPLAY_SEARCH and not S_IN_SEARCH %}
+				<form action="{{ U_SEARCH }}" method="get" id="search">
+					<fieldset>
+						<div class="input-group">
+							<input
+		   						name="keywords" id="keywords" type="search" maxlength="128" title="{{ lang('SEARCH_KEYWORDS') }}"
+								class="form-control" size="20" value="{{ SEARCH_WORDS }}" placeholder="{{ lang('SEARCH_MINI') }}"
+							/>
+							<span class="input-group-btn">
+								<button class="btn btn-default" type="submit" title="{{ lang('SEARCH') }}">{{ lang('SEARCH') }}</button>
+							</span>
+						</div>
+						<a href="{{ U_SEARCH }}" class="icon-button search-adv-icon" title="{{ lang('SEARCH_ADV') }}">{{ lang('SEARCH_ADV') }}</a>
+						{{ S_SEARCH_HIDDEN_FIELDS }}
+					</fieldset>
+				</form>
+				{% endif %}
+			</div>
+		</div>
+
+		{% EVENT overall_header_navbar_before %}
+		{% include 'navbar_header.html' %}
+	</div>
+
+	{% EVENT overall_header_page_body_before %}
+
+	<a id="start_here" class="anchor"></a>
+	<div id="page-body" role="main">
+		{% if S_BOARD_DISABLED and S_USER_LOGGED_IN and (U_MCP or U_ACP) %}
+		<div id="information" class="panel panel-warning">
+			<div class="panel-heading">
+				NOTICE
+			</div>
+			<div class="panel-body">
+				{{ lang('BOARD_DISABLED') }}
+			</div>
+		</div>
+		{% endif %}
+
+		{% EVENT overall_header_content_before %}

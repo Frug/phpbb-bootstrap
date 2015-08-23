@@ -1,0 +1,127 @@
+/*  phpBB3 Style Sheet
+    --------------------------------------------------------------
+    Style name:         Sandstone
+    Original authors:   Philip Nicolcev ( http://www.cyclical.ca/ )
+                        Rosina Ramirez
+    --------------------------------------------------------------
+*/
+
+.skiplink a {
+	padding: 6px;
+	position: absolute;
+	top: -40px;
+	left: 0px;
+	transition: top 1s ease-out, background 1s linear;
+	z-index: 100;
+}
+.skiplink a:focus {
+	top: 0px;
+	left: 0px;
+}
+
+.header-avatar img {
+	max-height: 40px;
+	width: auto;
+	border-radius: 5px;
+}
+
+#username_logged_in>a {
+	padding: 5px 15px;
+}
+
+#search-box {
+	padding-top: 10px;
+}
+
+#darkenwrapper {
+    display: none;
+    position: fixed;
+	left: 0;
+	top: 0;
+	right: 0;
+	bottom: 0;
+    z-index: 10;
+}
+
+#darken {
+	background: rgba(0,0,0,0.5);
+	position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.5;
+    z-index: 15;
+}
+
+.modal-dialog {
+	z-index: 55;
+}
+
+.forums .row, .topics .row {
+	margin-bottom: 15px;
+}
+
+.forumtitle {
+	font-weight: bold;
+}
+
+.ucp-container {
+	border-color: #ddd;
+	border-width: 0px 1px 1px 1px;
+	border-style: solid;
+	border-radius: 0 0 5px 5px;
+	padding: 15px;
+}
+
+#pm-actions {
+	margin-bottom: 15px;
+}
+
+@media (min-width: 768px) {
+	#cp-menu {
+		padding-right: 0;
+	}
+	#cp-menu ul.nav-stacked li a {
+		border-radius: 5px 0 0 5px;
+	}
+
+	#cp-main {
+		padding-left: 0;
+	}
+}
+
+dl.legend {
+	margin: 15px;
+	padding: 15px;
+	background: #aaa;
+	color: white;
+	border-radius: 5px;
+}
+
+dl.legend dd>span {
+	width: 20px;
+	height: 20px;
+	float: left;
+	margin-right: 15px;
+	border-radius: 5px;
+	border: 1px solid #fff;
+}
+
+.pm_marked {
+	background-color: #FF954E;
+}
+
+.pm_replied {
+	background-color: #A9A9C0;
+}
+
+dl.legend dt {
+	display: block;
+	padding-bottom: 5px;
+}
+
+dl.legend dd {
+	display: block;
+	padding-bottom: 5px;
+}
