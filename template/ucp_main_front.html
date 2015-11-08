@@ -1,4 +1,6 @@
-{% INCLUDE 'ucp_header.html' %}
+{% extends "layout_ucp.html" %}
+
+{% block inner_content %}
 <div class="panel-heading">
 	<h2 class="panel-title">{{ lang('TITLE') }}</h2>
 </div>
@@ -62,5 +64,4 @@
 	</dl>
 
 </div>
-
-{% INCLUDE 'ucp_footer.html' %}
+{% endblock %}

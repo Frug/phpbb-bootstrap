@@ -1,5 +1,6 @@
-<!-- IF S_AJAX_REQUEST -->
+{% extends S_AJAX_REQUEST ? "layout_ajax.html" : "layout_main.html" %}
 
+{% block ajax %}
 	<h3>{MESSAGE_TITLE}</h3>
 	<p>{MESSAGE_TEXT}</p>
 
@@ -26,11 +27,9 @@
 		<input type="button" name="confirm" value="{YES_VALUE}" class="button1" />&nbsp;
 		<input type="button" name="cancel" value="{L_NO}" class="button2" />
 	</fieldset>
+{% endblock %}
 
-<!-- ELSE -->
-
-<!-- INCLUDE overall_header.html -->
-
+{% block content %}
 <form id="confirm" action="{S_CONFIRM_ACTION}" method="post">
 
 <div class="panel">
@@ -64,6 +63,4 @@
 	</div>
 </div>
 </form>
-
-<!-- INCLUDE overall_footer.html -->
-<!-- ENDIF -->
+{% endif %}

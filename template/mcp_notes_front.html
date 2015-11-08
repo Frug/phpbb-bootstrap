@@ -1,5 +1,6 @@
-<!-- INCLUDE mcp_header.html -->
+{% extends "layout_mcp.html" %}
 
+{% block inner_content %}
 <form method="post" id="mcp" action="{U_POST_ACTION}">
 
 <h2>{L_TITLE}</h2>
@@ -24,5 +25,4 @@
 	{S_FORM_TOKEN}
 </fieldset>
 </form>
-
-<!-- INCLUDE mcp_footer.html -->
+{% endblock %}

@@ -1,7 +1,7 @@
-<!-- INCLUDE overall_header.html -->
+{% extends "layout_main.html" %}
 
+{% block content %}
 <h2 class="faq-title">{L_FAQ_TITLE}</h2>
-
 
 <div class="panel bg1" id="faqlinks">
 	<div class="inner">
@@ -44,5 +44,5 @@
 	</div>
 <!-- END faq_block -->
 
-<!-- INCLUDE jumpbox.html -->
-<!-- INCLUDE overall_footer.html -->
+{% include "includes/jumpbox.html" %}
+{% endblock %}

@@ -1,5 +1,6 @@
-<!-- INCLUDE overall_header.html -->
+{% extends "layout_main.html" %}
 
+{% block content %}
 <h2 class="titlespace"><!-- IF S_REPORT_POST -->{L_REPORT_POST}<!-- ELSE -->{L_REPORT_MESSAGE}<!-- ENDIF --></h2>
 
 <form method="post" action="{S_REPORT_ACTION}" id="report">
@@ -51,5 +52,4 @@
 	</div>
 </div>
 </form>
-
-<!-- INCLUDE overall_footer.html -->
+{% endblock %}

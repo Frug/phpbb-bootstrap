@@ -1,5 +1,6 @@
-<!-- INCLUDE mcp_header.html -->
+{% extends "layout_mcp.html" %}
 
+{% block inner_content %}
 <div class="tabs-container">
 <h2><a href="{U_VIEW_TOPIC}">{L_TOPIC}{L_COLON} {TOPIC_TITLE}</a></h2>
 
@@ -154,7 +155,7 @@
 		<div class="pagination">
 			{TOTAL_POSTS}
 			<!-- IF .pagination --> 
-				<!-- INCLUDE pagination.html -->
+				<!-- INCLUDE includes/pagination.html -->
 			<!-- ELSE --> 
 				 &bull; {PAGE_NUMBER}
 			<!-- ENDIF -->
@@ -182,5 +183,4 @@
 </fieldset>
 
 </form>
-
-<!-- INCLUDE mcp_footer.html -->
+{% endblock %}

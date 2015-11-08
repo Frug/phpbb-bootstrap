@@ -1,5 +1,6 @@
-<!-- INCLUDE mcp_header.html -->
+{% extends "layout_mcp.html" %}
 
+{% block inner_content %}
 <h2>{PAGE_TITLE}</h2>
 
 <!-- EVENT mcp_front_latest_unapproved_before -->
@@ -189,5 +190,4 @@
 <!-- ENDIF -->
 
 <!-- EVENT mcp_front_latest_logs_after -->
-
-<!-- INCLUDE mcp_footer.html -->
+{% endblock %}

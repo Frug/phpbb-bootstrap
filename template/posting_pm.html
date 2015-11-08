@@ -1,5 +1,6 @@
-<!-- INCLUDE ucp_header.html -->
+{% extends "layout_ucp.html" %}
 
+{% block inner_content %}
 <!-- IF S_DRAFT_LOADED -->
 	<div class="panel">
 		<div class="inner">
@@ -29,7 +30,7 @@
 	<div class="inner">
 
 	<!-- DEFINE $EXTRA_POSTING_OPTIONS = 1 -->
-	<!-- INCLUDE posting_editor.html -->
+	{% include "includes/posting_editor.html" %}
 
 	</div>
 </div>
@@ -39,5 +40,4 @@
 <!-- IF S_DISPLAY_REVIEW --><!-- INCLUDE posting_topic_review.html --><!-- ENDIF -->
 
 <!-- IF S_DISPLAY_HISTORY --><!-- INCLUDE ucp_pm_history.html --><!-- ENDIF -->
-
-<!-- INCLUDE ucp_footer.html -->
+{% endblock %}

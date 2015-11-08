@@ -1,6 +1,6 @@
-<!-- INCLUDE overall_header.html -->
+{% extends "layount_main.html" %}
 
-
+{% block content %}
 <form action="{S_PROFILE_ACTION}" method="post" id="resend">
 
 <div class="panel">
@@ -28,5 +28,4 @@
 	</div>
 </div>
 </form>
-
-<!-- INCLUDE overall_footer.html -->
+{% endblock %}

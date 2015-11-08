@@ -1,5 +1,6 @@
-<!-- INCLUDE overall_header.html -->
+{% extends "layout_main.html" %}
 
+{% block content %}
 <!-- IF S_CONTACT_ADMIN-->
 <h2 class="titlespace">{L_CONTACT_ADMIN}</h2>
 <!-- ELSEIF S_SEND_USER -->
@@ -101,5 +102,4 @@
 </div>
 
 </form>
-
-<!-- INCLUDE overall_footer.html -->
+{% endblock %}

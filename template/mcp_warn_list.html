@@ -1,5 +1,6 @@
-<!-- INCLUDE mcp_header.html -->
+{% extends "layout_mcp.html" %}
 
+{% block inner_content %}
 <form method="post" id="mcp" action="{U_POST_ACTION}">
 
 <h2>{L_WARNED_USERS}</h2>
@@ -14,7 +15,7 @@
 			<div class="pagination">
 				{TOTAL_USERS}
 				<!-- IF .pagination --> 
-					<!-- INCLUDE pagination.html -->
+					<!-- INCLUDE includes/pagination.html -->
 				<!-- ELSE --> 
 					 &bull; {PAGE_NUMBER}
 				<!-- ENDIF -->
@@ -55,7 +56,7 @@
 			<div class="pagination">
 				{TOTAL_USERS}
 				<!-- IF .pagination --> 
-					<!-- INCLUDE pagination.html -->
+					<!-- INCLUDE includes/pagination.html -->
 				<!-- ELSE --> 
 					 &bull; {PAGE_NUMBER}
 				<!-- ENDIF -->
@@ -72,5 +73,4 @@
 </div>
 
 </form>
-
-<!-- INCLUDE mcp_footer.html -->
+{% endblock %}

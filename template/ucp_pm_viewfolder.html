@@ -1,5 +1,6 @@
-{% INCLUDE 'ucp_header.html' %}
+{% extends "layout_ucp.html" %}
 
+{% block inner_content %}
 {% if PROMPT %}
 	<h2>{L_EXPORT_AS_CSV}</h2>
 	<form id="viewfolder" method="post" action="{S_PM_ACTION}">
@@ -40,43 +41,54 @@
 	{% endif %}
 
 	<!-- IF .messagerow -->
-		<div class="row">
-			<div class="col-md-10">{L_MESSAGE}</div>
-			<div class="col-md-2">{L_MARK}</div>
-		</div>
+		<table class="table">
+			<colgroup>
+				<col style="width:75px">
+				<col>
+			</colgroup>
+			<thead>
+				<tr>
+					<th>{L_MARK}</th>
+					<th>{L_MESSAGE}</th>
+				</tr>
+			</thead>
+			<tbody>
+			<!-- BEGIN messagerow -->
+				<tr class="pmlist {% if S_SHOW_RECIPIENTS %}missing-column{% endif %}{% if messagerow.PM_CLASS %} {{ messagerow.PM_CLASS }}{% endif %}">
+					<td>
+						<input type="checkbox" name="marked_msg_id[]" value="{{ messagerow.MESSAGE_ID }}">
+					</td>
+					<td class="{messagerow.FOLDER_IMG_STYLE}">
+						<div<!-- IF messagerow.PM_ICON_URL and S_PM_ICONS --> style="background-image: url({messagerow.PM_ICON_URL}); background-repeat: no-repeat;"<!-- ENDIF -->>
+							<!-- IF messagerow.S_PM_UNREAD and not messagerow.S_PM_DELETED --><a href="{messagerow.U_VIEW_PM}" class="icon-link"></a><!-- ENDIF -->
+							<div class="list-inner">
 
-		<!-- BEGIN messagerow -->
-		<div class="row pmlist {% if S_SHOW_RECIPIENTS %}missing-column{% endif %}{% if messagerow.PM_CLASS %} {{ messagerow.PM_CLASS }}{% endif %}">
+							{% if messagerow.S_PM_DELETED %}
+								<a href="{messagerow.U_REMOVE_PM}" class="topictitle">{L_DELETE_MESSAGE}</a><br>
+								<span class="error">{L_MESSAGE_REMOVED_FROM_OUTBOX}</span>
+							{% else %}
+								<a href="{messagerow.U_VIEW_PM}" class="topictitle">{messagerow.SUBJECT}</a>
+							{% endif %}
+							{% if messagerow.S_AUTHOR_DELETED %}
+								<br><em class="small">{L_PM_FROM_REMOVED_AUTHOR}</em>
+							{% endif %}
+							{% if messagerow.S_PM_REPORTED %}
+								<a href="{messagerow.U_MCP_REPORT}">{REPORTED_IMG}</a>
+							{% endif %}
+							{messagerow.ATTACH_ICON_IMG}<br>
+							{% if S_SHOW_RECIPIENTS %}
+								{L_MESSAGE_TO} {messagerow.RECIPIENTS}{% else %}{L_MESSAGE_BY_AUTHOR} {messagerow.MESSAGE_AUTHOR_FULL} &raquo; {messagerow.SENT_TIME}
+							{% endif %}
 
-			<div class="col-md-10">
-			
-				<div class="icon {messagerow.FOLDER_IMG_STYLE}">
-					<div<!-- IF messagerow.PM_ICON_URL and S_PM_ICONS --> style="background-image: url({messagerow.PM_ICON_URL}); background-repeat: no-repeat;"<!-- ENDIF -->>
-						<!-- IF messagerow.S_PM_UNREAD and not messagerow.S_PM_DELETED --><a href="{messagerow.U_VIEW_PM}" class="icon-link"></a><!-- ENDIF -->
-						<div class="list-inner">
-
-						<!-- IF messagerow.S_PM_DELETED -->
-							<a href="{messagerow.U_REMOVE_PM}" class="topictitle">{L_DELETE_MESSAGE}</a><br>
-							<span class="error">{L_MESSAGE_REMOVED_FROM_OUTBOX}</span>
-						<!-- ELSE -->
-							<a href="{messagerow.U_VIEW_PM}" class="topictitle">{messagerow.SUBJECT}</a>
-						<!-- ENDIF -->
-						<!-- IF messagerow.S_AUTHOR_DELETED -->
-							<br><em class="small">{L_PM_FROM_REMOVED_AUTHOR}</em>
-						<!-- ENDIF -->
-
-						{% if messagerow.S_PM_REPORTED %}<a href="{messagerow.U_MCP_REPORT}">{REPORTED_IMG}</a>{% endif %} {messagerow.ATTACH_ICON_IMG}<br>
-						{% if S_SHOW_RECIPIENTS %}{L_MESSAGE_TO} {messagerow.RECIPIENTS}{% else %}{L_MESSAGE_BY_AUTHOR} {messagerow.MESSAGE_AUTHOR_FULL} &raquo; {messagerow.SENT_TIME}{% endif %}
-
+							</div>
 						</div>
-					</div>
-					{% if S_SHOW_RECIPIENTS %}<dd class="info"><span>{L_SENT_AT}{{ lang('COLON') }} {messagerow.SENT_TIME}</span></dd>{% endif %}
-					{% if S_UNREAD %}<dd class="info">{% if messagerow.FOLDER %}<a href="{messagerow.U_FOLDER}">{messagerow.FOLDER}</a>{% else %}{L_UNKNOWN_FOLDER}{% endif %}</dd>{% endif %}
-				</div>
-			</div>
-			<div class="col-md-2"><input type="checkbox" name="marked_msg_id[]" value="{messagerow.MESSAGE_ID}" /></div>
-		</div>
-		<!-- END messagerow -->
+						{% if S_SHOW_RECIPIENTS %}<dd class="info"><span>{L_SENT_AT}{{ lang('COLON') }} {messagerow.SENT_TIME}</span></dd>{% endif %}
+						{% if S_UNREAD %}<dd class="info">{% if messagerow.FOLDER %}<a href="{messagerow.U_FOLDER}">{messagerow.FOLDER}</a>{% else %}{L_UNKNOWN_FOLDER}{% endif %}</dd>{% endif %}
+					</td>
+				</tr>
+			<!-- END messagerow -->
+			</tbody>
+		</table>
 
 	<!-- ELSE -->
 		<p><strong>
@@ -101,7 +113,7 @@
 			<div class="pagination">
 				{TOTAL_MESSAGES}
 				<!-- IF .pagination --> 
-					<!-- INCLUDE pagination.html -->
+					<!-- INCLUDE includes/pagination.html -->
 				<!-- ELSE --> 
 					 &bull; {PAGE_NUMBER}
 				<!-- ENDIF -->
@@ -111,16 +123,16 @@
 
 	<!-- IF FOLDER_CUR_MESSAGES neq 0 -->
 	<fieldset class="display-options">
-		<label>{L_DISPLAY}{{ lang('COLON') }} {S_SELECT_SORT_DAYS}</label>
-		<label>{L_SORT_BY} {S_SELECT_SORT_KEY}</label>
-		<label>{S_SELECT_SORT_DIR}</label>
-		<input type="submit" name="sort" value="{L_GO}" class="button2" />
-		<input type="hidden" name="cur_folder_id" value="{CUR_FOLDER_ID}" />
+		<div class="form-group">
+			{{ lang('DISPLAY') }}{{ lang('COLON') }} <div class="form-control-fix">{{ S_SELECT_SORT_DAYS }}</div>
+			{{ lang('SORT_BY') }}{{ lang('COLON') }} <div class="form-control-fix">{{ S_SELECT_SORT_KEY }}</div> <div class="form-control-fix">{{ S_SELECT_SORT_DIR }}</div>
+			<input type="submit" name="sort" value="{{ lang('GO') }}" class="btn btn-default">
+			<input type="hidden" name="cur_folder_id" value="{CUR_FOLDER_ID}">
+		</div>
 	</fieldset>
 	<!-- ENDIF -->
 
 	{% INCLUDE 'ucp_pm_message_footer.html' %}
 
 {% endif %}
-
-{% INCLUDE 'ucp_footer.html' %}
+{% endblock %}

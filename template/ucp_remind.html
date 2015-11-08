@@ -1,5 +1,6 @@
-<!-- INCLUDE overall_header.html -->
+{% extends "layout_ucp.html" %}
 
+{% block inner_content %}
 <form action="{S_PROFILE_ACTION}" method="post" id="remind">
 
 <div class="panel">
@@ -28,5 +29,4 @@
 	</div>
 </div>
 </form>
-
-<!-- INCLUDE overall_footer.html -->
+{% endblock %}

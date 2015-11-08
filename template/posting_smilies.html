@@ -1,5 +1,6 @@
-<!-- INCLUDE simple_header.html -->
+{% extends "layout_simple.html %}
 
+{% block content %}
 <script type="text/javascript">
 // <![CDATA[
 	var form_name = opener.form_name;
@@ -19,9 +20,8 @@
 </div>
 <!-- IF .pagination --> 
 	<div class="pagination">
-		<!-- INCLUDE pagination.html -->
+		<!-- INCLUDE includes/pagination.html -->
 	</div>
 <!-- ENDIF -->
 <a href="#" onclick="window.close(); return false;">{L_CLOSE_WINDOW}</a>
-
-<!-- INCLUDE simple_footer.html -->
+{% endblock %}

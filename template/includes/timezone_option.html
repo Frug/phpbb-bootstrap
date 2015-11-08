@@ -1,0 +1,29 @@
+<div class="form-group">
+    <label for="timezone">{L_BOARD_TIMEZONE}{L_COLON}</label>
+    <div class="row">
+        {% if loops.timezone_date is not empty %}
+        <div class="col-sm-6" id="tz_select_date" style="display: none;">
+            <select name="tz_date" id="tz_date" class="form-control tz_select">
+                <option value="">{L_SELECT_CURRENT_TIME}</option>
+                <!-- BEGIN timezone_date -->
+                    <option value="{timezone_date.VALUE}"<!-- IF timezone_date.SELECTED --> selected="selected"<!-- ENDIF -->>{timezone_date.TITLE}</option>
+                <!-- END timezone_date -->
+            </select>
+            <input type="button" id="tz_select_date_suggest" class="btn btn-default" style="display: none;" timezone-preselect="<!-- IF S_TZ_PRESELECT -->true<!-- ELSE -->false<!-- ENDIF -->" data-l-suggestion="{L_TIMEZONE_DATE_SUGGESTION}" value="{L_TIMEZONE_DATE_SUGGESTION}">
+        </div>
+        {% endif %}
+        <div class="col-sm-6">
+            <select name="tz" id="timezone" class="form-control tz_select">
+                <option value="">{L_SELECT_TIMEZONE}</option>
+                <!-- BEGIN timezone_select -->
+                <optgroup label="{timezone_select.LABEL}" data-tz-value="{timezone_select.VALUE}">
+                    <!-- BEGIN timezone_options -->
+                    <option title="{timezone_select.timezone_options.TITLE}" value="{timezone_select.timezone_options.VALUE}"<!-- IF timezone_select.timezone_options.SELECTED --> selected="selected"<!-- ENDIF -->>{timezone_select.timezone_options.LABEL}</option>
+                    <!-- END timezone_options -->
+                </optgroup>
+                <!-- END timezone_select -->
+            </select>
+        </div>
+    </div>
+    <!-- INCLUDEJS timezone.js -->
+</div>

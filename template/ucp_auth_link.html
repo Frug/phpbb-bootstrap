@@ -1,5 +1,6 @@
-<!-- INCLUDE ucp_header.html -->
+{% extends "layout_ucp.html" %}
 
+{% block inner_content %}
 <h2>{L_UCP_AUTH_LINK_TITLE}</h2>
 
 <div class="panel">
@@ -11,5 +12,4 @@
 		<!-- ENDIF -->
 	</div>
 </div>
-
-<!-- INCLUDE ucp_footer.html -->
+{% endblock %}

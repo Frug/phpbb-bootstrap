@@ -1,5 +1,6 @@
-{% INCLUDE 'overall_header.html' %}
+{% extends "layout_main.html" %}
 
+{% block content %}
 <div class="row time">
 	<div class="col-md-6">
 		{{ CURRENT_TIME }}
@@ -17,64 +18,83 @@
 {% endif %}
 {% EVENT index_body_markforums_after %}
 
-<!-- INCLUDE forumlist_body.html -->
+{% include "includes/forumlist.html" %}
 
-<!-- EVENT index_body_forumlist_body_after -->
+{% EVENT index_body_forumlist_body_after %}
 
-<!-- IF not S_USER_LOGGED_IN and not S_IS_BOT -->
-	<form method="post" action="{S_LOGIN_ACTION}" class="headerspace">
-	<h3><a href="{U_LOGIN_LOGOUT}">{L_LOGIN_LOGOUT}</a><!-- IF S_REGISTER_ENABLED -->&nbsp; &bull; &nbsp;<a href="{U_REGISTER}">{L_REGISTER}</a><!-- ENDIF --></h3>
-		<fieldset class="quick-login">
-			<label for="username"><span>{L_USERNAME}{{ lang('COLON') }}</span> <input type="text" tabindex="1" name="username" id="username" size="10" class="inputbox" title="{L_USERNAME}" /></label>
-			<label for="password"><span>{L_PASSWORD}{{ lang('COLON') }}</span> <input type="password" tabindex="2" name="password" id="password" size="10" class="inputbox" title="{L_PASSWORD}" autocomplete="off" /></label>
-			<!-- IF U_SEND_PASSWORD -->
+{% if not S_USER_LOGGED_IN and not S_IS_BOT or true %}
+    <a href="{U_LOGIN_LOGOUT}">{L_LOGIN_LOGOUT}</a>{% if S_REGISTER_ENABLED %}&nbsp; &bull; &nbsp;<a href="{U_REGISTER}">{L_REGISTER}</a>{% endif %}
+    <br><br>
+	<form method="post" action="{S_LOGIN_ACTION}">
+        <div class="quick-login form-inline">
+            <div class="form-group">
+                <div class="input-group">
+                    <span class="input-group-addon">{L_USERNAME}</span>
+                    <input type="text" tabindex="1" name="username" id="username" size="10" class="form-control" title="{L_USERNAME}">
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="input-group">
+                    <span class="input-group-addon">{L_PASSWORD}</span>
+                    <input type="password" tabindex="2" name="password" id="password" size="10" class="form-control" title="{L_PASSWORD}" autocomplete="off">
+                </div>
+            </div>
+			{% if U_SEND_PASSWORD %}
 				<a href="{U_SEND_PASSWORD}">{L_FORGOT_PASS}</a>
-			<!-- ENDIF -->
-			<!-- IF S_AUTOLOGIN_ENABLED -->
+			{% endif %}
+			{% if S_AUTOLOGIN_ENABLED %}
 				<span class="responsive-hide">|</span> <label for="autologin">{L_LOG_ME_IN} <input type="checkbox" tabindex="4" name="autologin" id="autologin" /></label>
-			<!-- ENDIF -->
-			<input type="submit" tabindex="5" name="login" value="{L_LOGIN}" class="button2" />
+			{% endif %}
+			<input type="submit" tabindex="5" name="login" value="{L_LOGIN}" class="btn btn-primary" />
 			{S_LOGIN_REDIRECT}
-		</fieldset>
+        </div>
 	</form>
-<!-- ENDIF -->
+{% endif %}
 
-<!-- EVENT index_body_stat_blocks_before -->
+{% EVENT index_body_stat_blocks_before %}
 
-<!-- IF S_DISPLAY_ONLINE_LIST -->
+{% if S_DISPLAY_ONLINE_LIST %}
 	<div class="stat-block online-list">
 		{% if U_VIEWONLINE %}<h3><a href="{{ U_VIEWONLINE }}">{L_WHO_IS_ONLINE}</a></h3>{% else %}<h3>{{ lang('WHO_IS_ONLINE') }}</h3>{% endif %}
 		<p>
-			<!-- EVENT index_body_block_online_prepend -->
+			{% EVENT index_body_block_online_prepend %}
 			{{ TOTAL_USERS_ONLINE }} ({{ lang('ONLINE_EXPLAIN') }})<br>{{ RECORD_USERS }}<br> <br>{{ LOGGED_IN_USER_LIST }}
 			{% if LEGEND %}<br><em>{{ lang('LEGEND') }}{{ lang('COLON') }} {{ LEGEND }}</em>{% endif %}
-			<!-- EVENT index_body_block_online_append -->
+			{% EVENT index_body_block_online_append %}
 		</p>
 	</div>
-<!-- ENDIF -->
+{% endif %}
 
-<!-- IF S_DISPLAY_BIRTHDAY_LIST -->
+{% if S_DISPLAY_BIRTHDAY_LIST %}
 	<div class="stat-block birthday-list">
 		<h3>{L_BIRTHDAYS}</h3>
 		<p>
-			<!-- EVENT index_body_block_birthday_prepend -->
-			<!-- IF .birthdays -->{L_CONGRATULATIONS}{{ lang('COLON') }} <strong><!-- BEGIN birthdays -->{birthdays.USERNAME}<!-- IF birthdays.AGE !== '' --> ({birthdays.AGE})<!-- ENDIF --><!-- IF not birthdays.S_LAST_ROW -->, <!-- ENDIF --><!-- END birthdays --></strong><!-- ELSE -->{L_NO_BIRTHDAYS}<!-- ENDIF -->
-			<!-- EVENT index_body_block_birthday_append -->
+			{% EVENT index_body_block_birthday_prepend %}
+			{% if birthdays is not empty %}{L_CONGRATULATIONS}{{ lang('COLON') }} 
+				<strong>
+				<!-- BEGIN birthdays -->
+				{birthdays.USERNAME}{% if birthdays.AGE !== '' %} ({birthdays.AGE}){% endif %}
+				{% if not birthdays.S_LAST_ROW %}, {% endif %}
+				<!-- END birthdays -->
+				</strong>
+			{% else %}{L_NO_BIRTHDAYS}
+			{% endif %}
+			{% EVENT index_body_block_birthday_append %}
 		</p>
 	</div>
-<!-- ENDIF -->
+{% endif %}
 
 {% if NEWEST_USER %}
 	<div class="stat-block statistics">
 		<h3>{L_STATISTICS}</h3>
 		<p>
-			<!-- EVENT index_body_block_stats_prepend -->
+			{% EVENT index_body_block_stats_prepend %}
 			{TOTAL_POSTS} &bull; {TOTAL_TOPICS} &bull; {TOTAL_USERS} &bull; {NEWEST_USER}
-			<!-- EVENT index_body_block_stats_append -->
+			{% EVENT index_body_block_stats_append %}
 		</p>
 	</div>
 {% endif %}
 
-<!-- EVENT index_body_stat_blocks_after -->
+{% EVENT index_body_stat_blocks_after %}
 
-<!-- INCLUDE overall_footer.html -->
+{% endblock %}

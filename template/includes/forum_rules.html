@@ -1,0 +1,13 @@
+<div class="panel panel-warning rules<!-- IF U_FORUM_RULES --> rules-link<!-- ENDIF -->">
+    {% if U_FORUM_RULES %}
+        <div class="panel-body">
+            <a href="{U_FORUM_RULES}">{L_FORUM_RULES}</a>
+        </div>
+    {% else %}
+        <div class="panel-heading">{L_FORUM_RULES}</div>
+        <div class="panel-body">
+        {FORUM_RULES}
+        </div>
+    {% endif %}
+    </div>
+</div>

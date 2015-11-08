@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html dir="{S_CONTENT_DIRECTION}" lang="{S_USER_LANG}">
+    <head>
+    {% block head %}
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="distribution" content="global">
+        <meta name="copyright" content="2015 Thar Shaddin Roleplaying">
+        <meta name="keywords" content="roleplaying,role playing,thar,shaddin,pal tahrenor,medieval,dark,gothic,vampires,werewolves,play by post,pbp,pbem,rpg,writing,literature,interactive,fiction,fantasy,original,collaborative">
+        {{ META }}
+
+        <title>{% if UNREAD_NOTIFICATIONS_COUNT %}({UNREAD_NOTIFICATIONS_COUNT}) {% endif %}{% if not S_VIEWTOPIC and not S_VIEWFORUM %}{SITENAME} - {% endif %}{% if S_IN_MCP %}{L_MCP} - {% elseif S_IN_UCP %}{L_UCP} - {% endif %}{PAGE_TITLE}{% if S_VIEWTOPIC or S_VIEWFORUM %} - {SITENAME}{% endif %}</title>
+
+        {% if S_ENABLE_FEEDS %}
+            {% if S_ENABLE_FEEDS_OVERALL %}<link rel="alternate" type="application/atom+xml" title="{L_FEED} - {SITENAME}" href="{U_FEED}">{% endif %}
+            {% if S_ENABLE_FEEDS_NEWS %}<link rel="alternate" type="application/atom+xml" title="{L_FEED} - {L_FEED_NEWS}" href="{U_FEED}?mode=news">{% endif %}
+            {% if S_ENABLE_FEEDS_FORUMS %}<link rel="alternate" type="application/atom+xml" title="{L_FEED} - {L_ALL_FORUMS}" href="{U_FEED}?mode=forums">{% endif %}
+            {% if S_ENABLE_FEEDS_TOPICS %}<link rel="alternate" type="application/atom+xml" title="{L_FEED} - {L_FEED_TOPICS_NEW}" href="{U_FEED}?mode=topics">{% endif %}
+            {% if S_ENABLE_FEEDS_TOPICS_ACTIVE %}<link rel="alternate" type="application/atom+xml" title="{L_FEED} - {L_FEED_TOPICS_ACTIVE}" href="{U_FEED}?mode=topics_active">{% endif %}
+            {% if S_ENABLE_FEEDS_FORUM and S_FORUM_ID %}<link rel="alternate" type="application/atom+xml" title="{L_FEED} - {L_FORUM} - {FORUM_NAME}" href="{U_FEED}?f={S_FORUM_ID}">{% endif %}
+            {% if S_ENABLE_FEEDS_TOPIC and S_TOPIC_ID %}<link rel="alternate" type="application/atom+xml" title="{L_FEED} - {L_TOPIC} - {TOPIC_TITLE}" href="{U_FEED}?f={S_FORUM_ID}&amp;t={S_TOPIC_ID}">{% endif %}
+        {% endif %}
+        {% if U_CANONICAL %}
+        <link rel="canonical" href="{{ U_CANONICAL }}">
+        {% endif %}
+        {% if S_ALLOW_CDN %}
+        <script>
+            WebFontConfig = {
+                google: {
+                    families: ['Open Sans:n6']
+                }
+            };
+
+            (function (d) {
+                var wf = d.createElement('script'), s = d.scripts[0];
+                wf.src = 'https://ajax.googleapis.com/ajax/libs/webfont/1.5.18/webfont.js';
+                wf.async = true;
+                s.parentNode.insertBefore(wf, s);
+            })(document);
+        </script>
+        {% endif %}
+
+        <script type="text/javascript" src="/js/jquery.min.js"></script>
+        <script type="text/javascript" src="/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="{T_SUPER_TEMPLATE_PATH}/theme.js"></script>
+        <link href="/css/bootstrap.css" rel="stylesheet">
+        <link href="{{ T_STYLESHEET_LINK }}" rel="stylesheet">
+        {% if S_PLUPLOAD %}
+        <link href="{T_THEME_PATH}/plupload.css?assets_version={T_ASSETS_VERSION}" rel="stylesheet">
+        {% endif %}
+        {% EVENT overall_header_head_append %}
+        {$STYLESHEETS}
+        {% EVENT overall_header_stylesheets_after %}
+    {% endblock %}
+    </head>
+    <body id="phpbb" class="nojs notouch section-{SCRIPT_NAME} {BODY_CLASS}">
+        <div class="skiplink"><a href="#start_here">{{ lang('SKIP') }}</a></div>
+        {% EVENT overall_header_body_before %}
+
+        <div id="wrap" class="container">
+            <a id="top" class="anchor" accesskey="t"></a>
+
+            <div id="page-header">
+                <div class="row">
+                    <div id="site-description" class="col-md-8">
+                        <h1>
+                            <a href="{% if U_SITE_HOME %}{{ U_SITE_HOME }}{% else %}{{ U_INDEX }}{% endif %}"
+                               title="{% if U_SITE_HOME %}{{ lang('SITE_HOME') }}{% else %}{{ lang('INDEX') }}{% endif %}">{{ SITENAME }}</a>
+                        </h1>
+                        <p>{{ SITE_DESCRIPTION }}</p>
+                    </div>
+
+                    <div class="col-md-4 search-header" id="search-box" role="search">
+                        {% EVENT overall_header_searchbox_before %}
+                        {% if S_DISPLAY_SEARCH and not S_IN_SEARCH %}
+                        <form action="{{ U_SEARCH }}" method="get" id="search">
+                            <fieldset>
+                                <div class="input-group">
+                                    <input
+                                        name="keywords" id="keywords" type="search" maxlength="128" title="{{ lang('SEARCH_KEYWORDS') }}"
+                                        class="form-control" size="20" value="{{ SEARCH_WORDS }}" placeholder="{{ lang('SEARCH_MINI') }}">
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-default" type="submit" title="{{ lang('SEARCH') }}">{{ lang('SEARCH') }}</button>
+                                    </span>
+                                </div>
+                                <a href="{{ U_SEARCH }}" class="icon-button search-adv-icon" title="{{ lang('SEARCH_ADV') }}">{{ lang('SEARCH_ADV') }}</a>
+                                {{ S_SEARCH_HIDDEN_FIELDS }}
+                            </fieldset>
+                        </form>
+                        {% endif %}
+                    </div>
+                </div>
+
+                {% EVENT overall_header_navbar_before %}
+
+                <div class="navbar navbar-default" role="navigation">
+                    <div class="container-fluid">
+                        <div class="navbar-header">
+                            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#nav-main-container" aria-expanded="false">
+                                <span class="sr-only">Toggle navigation</span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                            </button>
+                        </div>
+
+                        <div class="collapse navbar-collapse" id="nav-main-container">
+
+
+                            <ul id="nav-main" class="nav navbar-nav" role="menubar">
+
+                                <!-- EVENT overall_header_navigation_prepend -->
+                                <li class="small-icon icon-faq" <!-- IF not S_USER_LOGGED_IN -->data-skip-responsive="true"<!-- ELSE -->data-last-responsive="true"<!-- ENDIF -->><a href="{U_FAQ}" rel="help" title="{L_FAQ_EXPLAIN}" role="menuitem">{L_FAQ}</a></li>
+                                <!-- EVENT overall_header_navigation_append -->
+                                <!-- IF U_ACP --><li class="small-icon icon-acp" data-last-responsive="true"><a href="{U_ACP}" title="{L_ACP}" role="menuitem">{L_ACP_SHORT}</a></li><!-- ENDIF -->
+                                <!-- IF U_MCP --><li class="small-icon icon-mcp" data-last-responsive="true"><a href="{U_MCP}" title="{L_MCP}" role="menuitem">{L_MCP_SHORT}</a></li><!-- ENDIF -->
+
+                                <!-- IF S_REGISTERED_USER -->
+                                <li id="username_logged_in" class="dropdown<!-- IF CURRENT_USER_AVATAR --> no-bulletin<!-- ENDIF -->">
+                                    <!-- EVENT navbar_header_username_prepend -->
+                                    <a href="{U_PROFILE}" class="header-avatar dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                        <!-- IF CURRENT_USER_AVATAR -->{CURRENT_USER_AVATAR} <!-- ENDIF -->{CURRENT_USERNAME_SIMPLE}
+                                    </a>
+                                    <ul class="dropdown-menu" role="menu">
+                                        <!-- IF U_RESTORE_PERMISSIONS --><li class="small-icon icon-restore-permissions"><a href="{U_RESTORE_PERMISSIONS}">{L_RESTORE_PERMISSIONS}</a></li><!-- ENDIF -->
+                                        <!-- EVENT navbar_header_profile_list_before -->
+                                        <li class="small-icon icon-ucp"><a href="{U_PROFILE}" title="{L_PROFILE}" role="menuitem">{L_PROFILE}</a></li>
+                                        <li class="small-icon icon-profile"><a href="{U_USER_PROFILE}" title="{L_READ_PROFILE}" role="menuitem">{L_READ_PROFILE}</a></li>
+                                        <!-- EVENT navbar_header_profile_list_after -->
+                                        <li role="separator" class="divider"></li>
+                                        <li class="small-icon icon-logout"><a href="{U_LOGIN_LOGOUT}" title="{L_LOGIN_LOGOUT}" accesskey="x" role="menuitem">{L_LOGIN_LOGOUT}</a></li>
+                                    </ul>
+                                    <!-- EVENT navbar_header_username_append -->
+                                </li>
+
+                                <!-- IF S_DISPLAY_PM -->
+                                <li class="small-icon icon-pm" data-skip-responsive="true">
+                                    <a href="{U_PRIVATEMSGS}" role="menuitem"><span>{L_PRIVATE_MESSAGES} [</span><strong>{PRIVATE_MESSAGE_COUNT}</strong><span>]</span></a>
+                                </li>
+                                <!-- ENDIF -->
+                                {% if S_NOTIFICATIONS_DISPLAY %}
+                                <li class="dropdown">
+                                    <a href="{U_VIEW_ALL_NOTIFICATIONS}" id="notification_list_button" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                        {L_NOTIFICATIONS} [<b>{NOTIFICATIONS_COUNT}</b>] <span class="caret"></span>
+                                    </a>
+
+                                    <ul class="dropdown-menu" id="notification_list" role="menu">
+                                        <li>
+                                            <a href="{U_NOTIFICATION_SETTINGS}">{L_SETTINGS}</a>
+                                        </li>
+                                        <!-- IF NOTIFICATIONS_COUNT -->
+                                        <li id="mark_all_notifications">
+                                            <a href="{U_MARK_ALL_NOTIFICATIONS}" data-ajax="notification.mark_all_read">{L_MARK_ALL_READ}</a>
+                                        </li>
+                                        <!-- ENDIF -->
+                                        <li role="separator" class="divider"></li>
+                                        <!-- IF not .notifications -->
+                                        <li class="dropdown-text">
+                                            {L_NO_NOTIFICATIONS}
+                                        </li>
+                                        <!-- ENDIF -->
+                                        <!-- BEGIN notifications -->
+                                        <li class="<!-- IF notifications.UNREAD --> bg2<!-- ENDIF --><!-- IF notifications.STYLING --> {notifications.STYLING}<!-- ENDIF --><!-- IF not notifications.URL --> no-url<!-- ENDIF -->">
+                                            <!-- IF notifications.URL -->
+                                            <a class="notification-block" href="<!-- IF notifications.UNREAD -->{notifications.U_MARK_READ}" data-real-url="{notifications.URL}<!-- ELSE -->{notifications.URL}<!-- ENDIF -->">
+                                                <!-- ENDIF -->
+                                                <!-- IF notifications.AVATAR -->{notifications.AVATAR}<!-- ELSE --><img src="{T_THEME_PATH}/images/no_avatar.gif" alt="" /><!-- ENDIF -->
+                                                <div class="notification_text">
+                                                    <p class="notification-title">{notifications.FORMATTED_TITLE}</p>
+                                                    <!-- IF notifications.REFERENCE --><p class="notification-reference">{notifications.REFERENCE}</p><!-- ENDIF -->
+                                                    <!-- IF notifications.FORUM --><p class="notification-forum">{notifications.FORUM}</p><!-- ENDIF -->
+                                                    <!-- IF notifications.REASON --><p class="notification-reason">{notifications.REASON}</p><!-- ENDIF -->
+                                                    <p class="notification-time">{notifications.TIME}</p>
+                                                </div>
+                                                <!-- IF notifications.URL --></a><!-- ENDIF -->
+                                            <!-- IF notifications.UNREAD -->
+                                            <a href="{notifications.U_MARK_READ}" class="mark_read icon-mark" data-ajax="notification.mark_read" title="{L_MARK_READ}"></a>
+                                            <!-- ENDIF -->
+                                        </li>
+                                        <!-- END notifications -->
+
+                                        <li role="separator" class="divider"></li>
+                                        <li>
+                                            <a href="{U_VIEW_ALL_NOTIFICATIONS}">{L_SEE_ALL}</a>
+                                        </li>
+                                    </ul>
+
+                                </li>
+                                <!-- ENDIF -->
+                                <!-- ELSE -->
+                                <li class="small-icon icon-logout"><a href="{U_LOGIN_LOGOUT}" title="{L_LOGIN_LOGOUT}" accesskey="x" role="menuitem">{L_LOGIN_LOGOUT}</a></li>
+                                <!-- IF S_REGISTER_ENABLED and not (S_SHOW_COPPA or S_REGISTRATION) -->
+                                <li class="small-icon icon-register" data-skip-responsive="true"><a href="{U_REGISTER}" role="menuitem">{L_REGISTER}</a></li>
+                                <!-- ENDIF -->
+                                <!-- EVENT navbar_header_logged_out_content -->
+                                <!-- ENDIF -->
+
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{L_QUICK_LINKS}<span class="caret"></span></a>
+                                    <ul class="dropdown-menu">
+                                        <!-- EVENT navbar_header_quick_links_before -->
+
+                                    {% if S_DISPLAY_SEARCH %}
+                                        <!-- IF S_REGISTERED_USER -->
+                                        <li class="small-icon icon-search-self"><a href="{U_SEARCH_SELF}" role="menuitem">{L_SEARCH_SELF}</a></li>
+                                        <!-- ENDIF -->
+                                        <!-- IF S_USER_LOGGED_IN -->
+                                        <li class="small-icon icon-search-new"><a href="{U_SEARCH_NEW}" role="menuitem">{L_SEARCH_NEW}</a></li>
+                                        <!-- ENDIF -->
+                                        <!-- IF S_LOAD_UNREADS --> 
+                                        <li class="small-icon icon-search-unread"><a href="{U_SEARCH_UNREAD}" role="menuitem">{L_SEARCH_UNREAD}</a></li>
+                                        <!-- ENDIF -->
+                                        <li class="small-icon icon-search-unanswered"><a href="{U_SEARCH_UNANSWERED}" role="menuitem">{L_SEARCH_UNANSWERED}</a></li>
+                                        <li class="small-icon icon-search-active"><a href="{U_SEARCH_ACTIVE_TOPICS}" role="menuitem">{L_SEARCH_ACTIVE_TOPICS}</a></li>
+                                        <li role="separator" class="divider"></li>
+                                        <li class="small-icon icon-search"><a href="{U_SEARCH}" role="menuitem">{L_SEARCH}</a></li>
+                                    {% endif %}
+                                        <!-- IF not S_IS_BOT and (S_DISPLAY_MEMBERLIST or U_TEAM) -->
+                                        <li class="separator"></li>
+                                        <!-- IF S_DISPLAY_MEMBERLIST --><li class="small-icon icon-members"><a href="{U_MEMBERLIST}" role="menuitem">{L_MEMBERLIST}</a></li><!-- ENDIF -->
+                                        <!-- IF U_TEAM --><li class="small-icon icon-team"><a href="{U_TEAM}" role="menuitem">{L_THE_TEAM}</a></li><!-- ENDIF -->
+                                        <!-- ENDIF -->
+                                        
+                                        <!-- EVENT navbar_header_quick_links_after -->
+                                    </ul>
+                                </li>
+
+                            </ul>
+                        </div>
+                    </div>
+                </div><!-- end .navbar-header-->
+                
+                <ol class="breadcrumb" role="menubar">
+                    <!-- DEFINE $MICRODATA = ' itemtype="http://data-vocabulary.org/Breadcrumb" itemscope=""' -->
+                    
+                    <!-- EVENT overall_header_breadcrumbs_before -->
+                    
+                    <!-- IF U_SITE_HOME --><li><a href="{U_SITE_HOME}"{$MICRODATA} data-navbar-reference="home">{L_SITE_HOME}</a></li><!-- ENDIF -->
+                        <!-- EVENT overall_header_breadcrumb_prepend -->
+                        <li><a href="{U_INDEX}" accesskey="h"{$MICRODATA} data-navbar-reference="index">{L_INDEX}</a></li>
+                        <!-- BEGIN navlinks -->
+                            <!-- EVENT overall_header_navlink_prepend -->
+                            <li><a href="{navlinks.U_VIEW_FORUM}"{$MICRODATA}<!-- IF navlinks.MICRODATA --> {navlinks.MICRODATA}<!-- ENDIF -->>{navlinks.FORUM_NAME}</a></li>
+                            <!-- EVENT overall_header_navlink_append -->
+                        <!-- END navlinks -->
+                        
+                        <!-- EVENT overall_header_breadcrumb_append -->
+                        <!-- EVENT overall_header_breadcrumbs_after -->
+
+                    <!-- IF S_DISPLAY_SEARCH and not S_IN_SEARCH -->
+                        <li style="display: none;"><a href="{U_SEARCH}" title="{L_SEARCH_ADV_EXPLAIN}" role="menuitem">{L_SEARCH}</a></li>
+                    <!-- ENDIF -->
+                </ol>
+
+            </div><!-- end #page-header -->
+
+            {% EVENT overall_header_page_body_before %}
+
+            <a id="start_here" class="anchor"></a>
+            <div id="page-body" role="main">
+                {% if S_BOARD_DISABLED and S_USER_LOGGED_IN and (U_MCP or U_ACP) %}
+                <div id="information" class="panel panel-warning">
+                    <div class="panel-heading">
+                        NOTICE
+                    </div>
+                    <div class="panel-body">
+                        {{ lang('BOARD_DISABLED') }}
+                    </div>
+                </div>
+                {% endif %}
+
+                {% EVENT overall_header_content_before %}
+
+                {% block content %}
+                <div class="panel panel-alert">
+                    <div class="panel-heading">
+                        Uh oh!
+                    </div>
+                    <div class="panel-body">
+                        There appears to be no content on this page!
+                    </div>
+                </div>
+                {% endblock %}
+
+                {% EVENT overall_footer_content_after %}
+            </div><!-- end #page-body -->
+        </div><!-- end #wrap -->
+
+        {% EVENT overall_footer_page_body_after %}
+
+        <footer class="container" id="page-footer">
+            <div class="navbar" role="navigation">
+                <ul id="nav-footer" class="list-inline" role="menubar">
+                    <li class="small-icon icon-home breadcrumbs">
+                        <!-- IF U_SITE_HOME --><span class="crumb"><a href="{U_SITE_HOME}" data-navbar-reference="home">{L_SITE_HOME}</a></span><!-- ENDIF -->
+                        <!-- EVENT overall_footer_breadcrumb_prepend -->
+                        <span class="crumb"><a href="{U_INDEX}" data-navbar-reference="index">{L_INDEX}</a></span>
+                        <!-- EVENT overall_footer_breadcrumb_append -->
+                    </li>
+                    <!-- IF U_WATCH_FORUM_LINK and not S_IS_BOT --><li class="small-icon icon-<!-- IF S_WATCHING_FORUM -->unsubscribe<!-- ELSE -->subscribe<!-- ENDIF -->" data-last-responsive="true"><a href="{U_WATCH_FORUM_LINK}" title="{S_WATCH_FORUM_TITLE}" data-ajax="toggle_link" data-toggle-class="small-icon icon-<!-- IF not S_WATCHING_FORUM -->unsubscribe<!-- ELSE -->subscribe<!-- ENDIF -->" data-toggle-text="{S_WATCH_FORUM_TOGGLE}" data-toggle-url="{U_WATCH_FORUM_TOGGLE}">{S_WATCH_FORUM_TITLE}</a></li><!-- ENDIF -->
+
+                    <!-- EVENT overall_footer_timezone_before -->
+                    <li class="rightside">{S_TIMEZONE}</li>
+                    <!-- EVENT overall_footer_timezone_after -->
+                    <!-- IF not S_IS_BOT -->
+                        <li class="small-icon icon-delete-cookies rightside"><a href="{U_DELETE_COOKIES}" data-ajax="true" data-refresh="true" role="menuitem">{L_DELETE_COOKIES}</a></li>
+                        <!-- IF S_DISPLAY_MEMBERLIST --><li class="small-icon icon-members rightside" data-last-responsive="true"><a href="{U_MEMBERLIST}" title="{L_MEMBERLIST_EXPLAIN}" role="menuitem">{L_MEMBERLIST}</a></li><!-- ENDIF -->
+                    <!-- ENDIF -->
+                    <!-- EVENT overall_footer_teamlink_before -->
+                    <!-- IF U_TEAM --><li class="small-icon icon-team rightside" data-last-responsive="true"><a href="{U_TEAM}" role="menuitem">{L_THE_TEAM}</a></li><!-- ENDIF -->
+                    <!-- EVENT overall_footer_teamlink_after -->
+                    <!-- IF U_CONTACT_US --><li class="small-icon icon-contact rightside" data-last-responsive="true"><a href="{U_CONTACT_US}" role="menuitem">{L_CONTACT_US}</a></li><!-- ENDIF -->
+                </ul>
+            </div>
+
+            <div class="copyright">
+                {% EVENT overall_footer_copyright_prepend %}
+                {CREDIT_LINE}
+                {% if TRANSLATION_INFO %}<br>{TRANSLATION_INFO}{% endif %}
+
+                {% EVENT overall_footer_copyright_append %}
+
+                {% if DEBUG_OUTPUT %}<br>{DEBUG_OUTPUT}{% endif %}
+                {% if U_ACP %}<br><strong><a href="{U_ACP}">{L_ACP}</a></strong>{% endif %}
+            </div>
+
+            <div id="darkenwrapper" data-ajax-error-title="{L_AJAX_ERROR_TITLE}" data-ajax-error-text="{L_AJAX_ERROR_TEXT}" data-ajax-error-text-abort="{L_AJAX_ERROR_TEXT_ABORT}" data-ajax-error-text-timeout="{L_AJAX_ERROR_TEXT_TIMEOUT}" data-ajax-error-text-parsererror="{L_AJAX_ERROR_TEXT_PARSERERROR}">
+                <div id="darken">&nbsp;</div>
+            </div>
+
+            <div id="phpbb_alert" class="modal-dialog" data-l-err="{{ lang('ERROR') }}" data-l-timeout-processing-req="{L_TIMEOUT_PROCESSING_REQ}">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <a href="#" class="alert_close"></a>
+                        <h3 class="alert_title">&nbsp;</h3><p class="alert_text"></p>
+                    </div>
+                    
+                </div>
+            </div>
+            <div id="phpbb_confirm" class="modal-dialog">
+                <div class="modal-content">
+                    <a href="#" class="alert_close"></a>
+                    <div class="alert_text"></div>
+                </div>
+            </div>
+        </footer>
+
+        <div>
+            <a id="bottom" class="anchor" accesskey="z"></a>
+            {% if not S_IS_BOT %}{RUN_CRON_TASK}{% endif %}
+        </div>
+
+        <script type="text/javascript" src="{T_ASSETS_PATH}/javascript/core.js?assets_version={T_ASSETS_VERSION}"></script>
+        <!-- INCLUDEJS forum_fn.js -->
+        <!-- INCLUDEJS ajax.js -->
+
+        {% EVENT overall_footer_after %}
+
+        {% if S_PLUPLOAD %}{% include 'plupload.html' %}{% endif %}
+        {$SCRIPTS}
+
+        {% EVENT overall_footer_body_after %}
+    </body>
+</html>

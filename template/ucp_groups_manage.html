@@ -1,5 +1,6 @@
-<!-- INCLUDE ucp_header.html -->
+{% extends "layout_ucp.html" %}
 
+{% block inner_content %}
 <h2<!-- IF GROUP_COLOR --> style="color:#{GROUP_COLOR};"<!-- ENDIF -->>{L_USERGROUPS}<!-- IF GROUP_NAME --> :: {GROUP_NAME}<!-- ENDIF --></h2>
 
 <form id="ucp" method="post" action="{S_UCP_ACTION}"{S_FORM_ENCTYPE}>
@@ -70,7 +71,7 @@
 	</div>
 </div>
 
-<!-- INCLUDE ucp_avatar_options.html -->
+<!-- INCLUDE includes/ucp_avatar_options.html -->
 
 <fieldset class="submit-buttons">
 	{S_HIDDEN_FIELDS}
@@ -162,7 +163,7 @@
 	<!-- IF .pagination -->
 	<div class="action-bar bottom">
 		<div class="pagination"> 
-			<!-- INCLUDE pagination.html -->
+			<!-- INCLUDE includes/pagination.html -->
 		</div>
 	</div>
 	<!-- ENDIF -->
@@ -243,5 +244,4 @@
 
 <!-- ENDIF -->
 </form>
-
-<!-- INCLUDE ucp_footer.html -->
+{% endblock %}

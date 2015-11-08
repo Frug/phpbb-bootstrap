@@ -1,6 +1,7 @@
-{% INCLUDE 'ucp_header.html' %}
+{% extends "layout_ucp.html" %}
 
-{% INCLUDE 'ucp_pm_message_header.html' %}
+{% block inner_content %}
+{% include 'ucp_pm_message_header.html' %}
 
 <!-- IF S_DISPLAY_HISTORY and (U_VIEW_PREVIOUS_HISTORY or U_VIEW_NEXT_HISTORY) -->
 	<fieldset class="display-options clearfix">
@@ -154,5 +155,4 @@
 </div>
 
 <!-- IF S_DISPLAY_HISTORY --><!-- INCLUDE ucp_pm_history.html --><!-- ENDIF -->
-
-<!-- INCLUDE ucp_footer.html -->
+{% endblock %}

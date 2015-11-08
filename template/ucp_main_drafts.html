@@ -1,5 +1,6 @@
-<!-- INCLUDE ucp_header.html -->
+{% extends "layout_ucp.html" %}
 
+{% block inner_content %}
 <form id="postform" method="post" action="{S_UCP_ACTION}"{S_FORM_ENCTYPE}>
 
 <h2>{L_TITLE}</h2>
@@ -11,7 +12,7 @@
 
 <!-- IF S_EDIT_DRAFT -->
 
-		<!-- INCLUDE posting_editor.html -->
+		{% include "includes/posting_editor.html" %}
 		</div>
 	</div>
 
@@ -75,5 +76,4 @@
 <!-- ENDIF -->
 
 </form>
-
-<!-- INCLUDE ucp_footer.html -->
+{% endblock %}

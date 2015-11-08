@@ -1,6 +1,5 @@
-
-<!-- IF S_PRIVMSGS -->
-	<!-- INCLUDE posting_pm_layout.html -->
-<!-- ELSE -->
-	<!-- INCLUDE posting_layout.html -->
-<!-- ENDIF -->
+{% if S_PRIVMSGS %}
+	{% include "posting_pm.html" %}
+{% else %}
+	{% include "posting.html" %}
+{% endif %}

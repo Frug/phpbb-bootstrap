@@ -1,5 +1,6 @@
-<!-- INCLUDE mcp_header.html -->
+{% extends "layout_mcp.html" %}
 
+{% block inner_content %}
 <h2>{L_TITLE}</h2>
 
 <form method="post" id="mcp" action="{U_POST_ACTION}">
@@ -12,7 +13,7 @@
 		<div class="pagination">
 			{TOTAL}
 			<!-- IF .pagination --> 
-				<!-- INCLUDE pagination.html -->
+				<!-- INCLUDE includes/pagination.html -->
 			<!-- ELSE --> 
 				 &bull; {PAGE_NUMBER}
 			<!-- ENDIF -->
@@ -64,7 +65,7 @@
 			<div class="pagination">
 				{TOTAL}
 				<!-- IF .pagination --> 
-					<!-- INCLUDE pagination.html -->
+					<!-- INCLUDE includes/pagination.html -->
 				<!-- ELSE --> 
 					 &bull; {PAGE_NUMBER}
 				<!-- ENDIF -->
@@ -89,7 +90,5 @@
 		</div>
 	<!-- ENDIF -->
 </form>
-
-<br />
-
-<!-- INCLUDE mcp_footer.html -->
+<br>
+{% endblock %}

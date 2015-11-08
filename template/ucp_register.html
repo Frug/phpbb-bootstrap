@@ -1,5 +1,7 @@
-<!-- INCLUDE overall_header.html -->
+{% extends "layout_ucp.html" %}
 
+{% block head %}
+{{ parent() }}
 <script type="text/javascript">
 // <![CDATA[
 	/**
@@ -13,7 +15,9 @@
 	}
 // ]]>
 </script>
+{% endblock %}
 
+{% block inner_content %}
 <form method="post" action="{S_UCP_ACTION}" id="register">
 
 <div class="panel">
@@ -53,7 +57,7 @@
 		<dd><select name="lang" id="lang" onchange="change_language(this.value); return false;" tabindex="6" title="{L_LANGUAGE}">{S_LANG_OPTIONS}</select></dd>
 	</dl>
 
-	<!-- INCLUDE timezone_option.html -->
+	{% include "includes/timezone_option.html" %}
 
 	<!-- EVENT ucp_register_profile_fields_before -->
 	<!-- IF .profile_fields -->
@@ -104,5 +108,4 @@
 	</div>
 </div>
 </form>
-
-<!-- INCLUDE overall_footer.html -->
+{% endblock %}

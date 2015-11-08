@@ -1,5 +1,6 @@
-<!-- INCLUDE ucp_header.html -->
+{% extends "layout_ucp.html" %}
 
+{% block inner_content %}
 <h2>{L_USERGROUPS}</h2>
 
 <form id="ucp" method="post" action="{S_UCP_ACTION}"{S_FORM_ENCTYPE}>
@@ -170,5 +171,4 @@
 	<!-- ENDIF -->
 
 </form>
-
-<!-- INCLUDE ucp_footer.html -->
+{% endblock %}
