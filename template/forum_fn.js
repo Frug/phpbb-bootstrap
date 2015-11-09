@@ -1,14 +1,14 @@
 jQuery(function($) {
 	'use strict';
 
-    /**
-     * Fix form fields that we have no control over
-     */
-    $('.display-options select').addClass('form-control');
+	/**
+	 * Fix form fields that we have no control over
+	 */
+	$('.display-options select').addClass('form-control');
 
-    /**
-     * Alternate display of subPanels
-     */
+	/**
+	 * Alternate display of subPanels
+	 */
 	$('.sub-panels').each(function() {
 
 		var $childNodes = $('a[data-subpanel]', this),
