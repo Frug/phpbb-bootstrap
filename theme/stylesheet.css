@@ -34,33 +34,33 @@
 }
 
 #darkenwrapper {
-    display: none;
-    position: fixed;
+	display: none;
+	position: fixed;
 	left: 0;
 	top: 0;
 	right: 0;
 	bottom: 0;
-    z-index: 10;
+	z-index: 10;
 }
 
 #darken {
 	background: rgba(0,0,0,0.5);
 	position: fixed;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    opacity: 0.5;
-    z-index: 15;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	opacity: 0.5;
+	z-index: 15;
 }
 
 .action-bar{
-    margin-bottom:15px
+	margin-bottom:15px
 }
 
 .modal-dialog {
-    z-index: 55;
-    display:none;
+	z-index: 55;
+	display:none;
 }
 
 .forums .row, .topics .row {
@@ -72,22 +72,22 @@
 }
 
 .pagination{
-    margin:0
+	margin:0
 }
 
 .topics .pagination-sm{
-    float:right;
-    margin:0 0 10px 0;
+	float:right;
+	margin:0 0 10px 0;
 }
 .topics .pagination-sm > li > a, .topics .pagination-sm > li > span{
-    padding: 2px 7px
+	padding: 2px 7px
 }
 
 .btn-text{
-    display:inline-block;
-    padding:6px 13px;
-    line-height:1.42857143;
-    vertical-align:top
+	display:inline-block;
+	padding:6px 13px;
+	line-height:1.42857143;
+	vertical-align:top
 }
 
 .ucp-container, .mcp-container {
@@ -99,33 +99,33 @@
 }
 
 .dropdown-menu > .dropdown-text{
-    padding:3px 20px;
-    clear:both;
-    white-space:nowrap
+	padding:3px 20px;
+	clear:both;
+	white-space:nowrap
 }
 
 .dropdown-inline{
-    display:inline-block
+	display:inline-block
 }
 
 .search-box{
-    text-align:right;
+	text-align:right;
 }
 
 .popover-container{
-    position:relative;
-    vertical-align:top;
-    display:inline-block;
+	position:relative;
+	vertical-align:top;
+	display:inline-block;
 }
 
 .popover-container .popover.bottom{
-    top:34px;
+	top:34px;
 }
 
 .panel-primary .panel-heading a,
 .panel-primary .panel-heading a:hover,
 .panel-primary .panel-heading a:focus{
-    color:#fff
+	color:#fff
 }
 
 #pm-actions {
@@ -133,9 +133,9 @@
 }
 
 @media (min-width: 768px) {
-    #cp-main {
-            padding-left: 0;
-    }
+	#cp-main {
+			padding-left: 0;
+	}
 }
 
 dl.legend {
@@ -192,15 +192,20 @@ dl.legend dd {
 		  transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
 }
 .form-control-fix select:focus {
-  border-color: #66afe9;
-  outline: 0;
-  -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, .6);
-          box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, .6);
+	border-color: #66afe9;
+	outline: 0;
+	-webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, .6);
+		  box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, .6);
 }
 .form-control-fix select::-moz-placeholder {
-  color: #999;
-  opacity: 1;
+	color: #999;
+	opacity: 1;
 }
 .form-control-fix select::-webkit-input-placeholder {
-  color: #999;
+	color: #999;
+}
+
+span.rank-img {
+	float: right;
+	width: auto;
 }
