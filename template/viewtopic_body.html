@@ -17,50 +17,50 @@
 
 {% if S_DISPLAY_SEARCHBOX %}
 <div class="row">
-    <div class="col-md-offset-6 col-md-6 search-box" role="search">
-        <form method="get" id="topic-search" action="{S_SEARCHBOX_ACTION}">
-            <div class="input-group">
-                <input class="form-control" type="search" name="keywords" id="search_keywords" size="20" placeholder="{L_SEARCH_TOPIC}">
-                <span class="input-group-btn">
-                    <button class="btn btn-default" type="submit" title="{L_SEARCH}">{L_SEARCH}</button>
-                </span>
-            </div>
+	<div class="col-md-offset-6 col-md-6 search-box" role="search">
+		<form method="get" id="topic-search" action="{S_SEARCHBOX_ACTION}">
+			<div class="input-group">
+				<input class="form-control" type="search" name="keywords" id="search_keywords" size="20" placeholder="{L_SEARCH_TOPIC}">
+				<span class="input-group-btn">
+					<button class="btn btn-default" type="submit" title="{L_SEARCH}">{L_SEARCH}</button>
+				</span>
+			</div>
 
-            <a href="{U_SEARCH}" class="button icon-button search-adv-icon" title="{L_SEARCH_ADV}">{L_SEARCH_ADV}</a>
-            {S_SEARCH_LOCAL_HIDDEN_FIELDS}
-        </form>
-    </div>
+			<a href="{U_SEARCH}" class="button icon-button search-adv-icon" title="{L_SEARCH_ADV}">{L_SEARCH_ADV}</a>
+			{S_SEARCH_LOCAL_HIDDEN_FIELDS}
+		</form>
+	</div>
 </div>
 <br>
 {% endif %}
 
 <div class="row action-bar">
-    <div class="col-md-4">
+	<div class="col-md-6">
 		{% EVENT viewtopic_buttons_top_before %}
 
-        {% if not S_IS_BOT and S_DISPLAY_REPLY_INFO %}
-            <a href="{U_POST_REPLY_TOPIC}" class="btn btn-primary {% if S_IS_LOCKED %}locked-icon{% else %}reply-icon{% endif %}" title="{% if S_IS_LOCKED %}{{ lang('TOPIC_LOCKED') }}{% else %}{{ lang('POST_REPLY') }}{% endif %}">
-                {% if S_IS_LOCKED %}{{ lang('BUTTON_TOPIC_LOCKED') }}{% else %}{L_BUTTON_POST_REPLY}{% endif %}
-            </a>
-        {% endif %}
-        
-        {% EVENT viewtopic_buttons_top_after %}
-        
-        {% include "includes/viewtopic_tools.html" %}
-    </div>
-	<div class="col-md-8 text-right">
-        {% if loops.pagination is not empty or TOTAL_POSTS %}
-            <div class="btn-text">
-                {% if U_VIEW_UNREAD_POST and not S_IS_BOT %}<a href="{U_VIEW_UNREAD_POST}" class="mark">{L_VIEW_UNREAD_POST}</a> &bull; {% endif %}{TOTAL_POSTS} &bull;
-                {PAGE_NUMBER}
-            </div>
-            {% if loops.pagination is not empty %}
-                {% include "includes/pagination.html" %}
-            {% endif %}
-        {% endif %}
-        
-        {% EVENT viewtopic_body_pagination_top_after %}
-    </div>
+		{% if not S_IS_BOT and S_DISPLAY_REPLY_INFO %}
+			<a href="{U_POST_REPLY_TOPIC}" class="btn btn-primary {% if S_IS_LOCKED %}locked-icon{% else %}reply-icon{% endif %}" title="{% if S_IS_LOCKED %}{{ lang('TOPIC_LOCKED') }}{% else %}{{ lang('POST_REPLY') }}{% endif %}">
+				{% if S_IS_LOCKED %}{{ lang('BUTTON_TOPIC_LOCKED') }}{% else %}{L_BUTTON_POST_REPLY}{% endif %}
+			</a>
+		{% endif %}
+		
+		{% EVENT viewtopic_buttons_top_after %}
+		
+		{% include "includes/viewtopic_tools.html" %}
+	</div>
+	<div class="col-md-6 text-right">
+		{% if loops.pagination is not empty or TOTAL_POSTS %}
+			<div class="btn-text">
+				{% if U_VIEW_UNREAD_POST and not S_IS_BOT %}<a href="{U_VIEW_UNREAD_POST}" class="mark">{L_VIEW_UNREAD_POST}</a> &bull; {% endif %}{TOTAL_POSTS} &bull;
+				{PAGE_NUMBER}
+			</div>
+			{% if loops.pagination is not empty %}
+				{% include "includes/pagination.html" %}
+			{% endif %}
+		{% endif %}
+		
+		{% EVENT viewtopic_body_pagination_top_after %}
+	</div>
 </div><!-- end .row -->
 
 <!-- IF S_HAS_POLL -->

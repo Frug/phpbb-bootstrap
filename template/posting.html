@@ -26,7 +26,9 @@
 	</div>
 {% endif %}
 
-<!-- IF S_SHOW_DRAFTS --><!-- INCLUDE drafts.html --><!-- ENDIF -->
+{% if S_SHOW_DRAFTS %}
+    {% include "drafts.html" %}
+{% endif %}
 
 <!-- IF S_POST_REVIEW --><!-- INCLUDE posting_review.html --><!-- ENDIF -->
 
@@ -37,10 +39,10 @@
         </div>
 		<div class="panel-body">
 			<p class="help-block">{L_UNGLOBALISE_EXPLAIN}</p>
-			<dl>
-				<dt><label for="to_forum_id">{L_MOVE}{L_COLON}</label></dt>
-				<dd><select id="to_forum_id" name="to_forum_id">{S_FORUM_SELECT}</select></dd>
-			</dl>
+            <div class="form-group">
+                <label for="to_forum_id">{L_MOVE}{L_COLON}</label>
+				<select class="form-control" id="to_forum_id" name="to_forum_id">{S_FORUM_SELECT}</select>
+            </div>
 			<input class="btn btn-primary" type="submit" name="post" value="{L_CONFIRM}">
             <input class="btn btn-default" type="submit" name="cancel_unglobalise" value="{L_CANCEL}">
 		</div>

@@ -1,44 +1,51 @@
 {% extends "layout_main.html" %}
 
 {% block content %}
-<h2 class="solo">{PAGE_TITLE}</h2>
+<h2>{{ PAGE_TITLE }}</h2>
 
 <form method="post" action="{S_MODE_ACTION}">
 
 <!-- BEGIN group -->
-<div class="forumbg forumbg-table">
-	<div class="inner">
-
-	<table class="table1">
+<div class="panel panel-primary">
+	<table class="table">
 	<thead>
 	<tr>
-		<th class="name" data-dfn="{L_RANK}{L_COMMA_SEPARATOR}{L_USERNAME}"><span class="rank-img">{L_RANK}&nbsp;</span><!-- IF group.U_GROUP --><a href="{group.U_GROUP}">{group.GROUP_NAME}</a><!-- ELSE -->{group.GROUP_NAME}<!-- ENDIF --></th>
-		<th class="info">{L_PRIMARY_GROUP}</th>
-		<!-- IF S_DISPLAY_MODERATOR_FORUMS --><th class="info">{L_MODERATOR}</th><!-- ENDIF -->
+		<th data-dfn="{L_RANK}{L_COMMA_SEPARATOR}{L_USERNAME}" class="col-md-6">
+			<span class="rank-img">{L_RANK}&nbsp;</span>{% if group.U_GROUP %}<a href="{group.U_GROUP}">{group.GROUP_NAME}</a>{% else %}{group.GROUP_NAME}{% endif %}
+		</th>
+		{% if S_DISPLAY_MODERATOR_FORUMS %}
+			<th class="col-md-3">{L_PRIMARY_GROUP}</th>
+			<th class="col-md-3">{L_MODERATOR}</th>
+		{% else %}
+			<th class="col-md-6">{L_PRIMARY_GROUP}</th>
+		{% endif %}
 	</tr>
 	</thead>
 	<tbody>
 <!-- BEGIN user -->
-	<tr class="<!-- IF group.user.S_ROW_COUNT is even -->bg1<!-- ELSE -->bg2<!-- ENDIF -->">
-		<td><!-- IF group.user.RANK_IMG --><span class="rank-img">{group.user.RANK_IMG}</span><!-- ELSE --><span class="rank-img">{group.user.RANK_TITLE}</span><!-- ENDIF -->{group.user.USERNAME_FULL}</td>
-		<td class="info"><!-- IF group.user.U_GROUP -->
-			<a<!-- IF group.user.GROUP_COLOR --> style="font-weight: bold; color: #{group.user.GROUP_COLOR}"<!-- ENDIF --> href="{group.user.U_GROUP}">{group.user.GROUP_NAME}</a>
-			<!-- ELSE -->
+	<tr>
+		<td>
+			{% if group.user.RANK_IMG %}<span class="rank-img">{group.user.RANK_IMG}</span>{% else %}<span class="rank-img">{group.user.RANK_TITLE}</span>{% endif %}{group.user.USERNAME_FULL}
+		</td>
+		<td>
+			{% if group.user.U_GROUP %}
+			<a{% if group.user.GROUP_COLOR %} style="font-weight: bold; color: #{group.user.GROUP_COLOR}"{% endif %} href="{group.user.U_GROUP}">{group.user.GROUP_NAME}</a>
+			{% else %}
 				{group.user.GROUP_NAME}
-			<!-- ENDIF --></td>
-		<!-- IF S_DISPLAY_MODERATOR_FORUMS -->
-			<td class="info"><!-- IF group.user.FORUM_OPTIONS --><select style="width: 100%;">{group.user.FORUMS}</select><!-- ELSEIF group.user.FORUMS -->{group.user.FORUMS}<!-- ELSE -->-<!-- ENDIF --></td>
-		<!-- ENDIF -->
+			{% endif %}
+		</td>
+		{% if S_DISPLAY_MODERATOR_FORUMS %}
+			<td>{% if group.user.FORUM_OPTIONS %}<select style="width: 100%;">{group.user.FORUMS}</select>{% elseif group.user.FORUMS %}{group.user.FORUMS}{% else %}-{% endif %}</td>
+		{% endif %}
 	</tr>
 <!-- BEGINELSE -->
-	<tr class="bg1">
+	<tr>
 		<td colspan="3"><strong>{L_NO_MEMBERS}</strong></td>
 	</tr>
 <!-- END user -->
 	</tbody>
 	</table>
 	
-	</div>
 </div>
 <!-- END group -->
 

@@ -229,29 +229,52 @@
                         </div>
                     </div>
                 </div><!-- end .navbar-header-->
-                
-                <ol class="breadcrumb" role="menubar">
-                    <!-- DEFINE $MICRODATA = ' itemtype="http://data-vocabulary.org/Breadcrumb" itemscope=""' -->
-                    
-                    <!-- EVENT overall_header_breadcrumbs_before -->
-                    
-                    <!-- IF U_SITE_HOME --><li><a href="{U_SITE_HOME}"{$MICRODATA} data-navbar-reference="home">{L_SITE_HOME}</a></li><!-- ENDIF -->
-                        <!-- EVENT overall_header_breadcrumb_prepend -->
-                        <li><a href="{U_INDEX}" accesskey="h"{$MICRODATA} data-navbar-reference="index">{L_INDEX}</a></li>
-                        <!-- BEGIN navlinks -->
-                            <!-- EVENT overall_header_navlink_prepend -->
-                            <li><a href="{navlinks.U_VIEW_FORUM}"{$MICRODATA}<!-- IF navlinks.MICRODATA --> {navlinks.MICRODATA}<!-- ENDIF -->>{navlinks.FORUM_NAME}</a></li>
-                            <!-- EVENT overall_header_navlink_append -->
-                        <!-- END navlinks -->
-                        
-                        <!-- EVENT overall_header_breadcrumb_append -->
-                        <!-- EVENT overall_header_breadcrumbs_after -->
 
-                    <!-- IF S_DISPLAY_SEARCH and not S_IN_SEARCH -->
-                        <li style="display: none;"><a href="{U_SEARCH}" title="{L_SEARCH_ADV_EXPLAIN}" role="menuitem">{L_SEARCH}</a></li>
-                    <!-- ENDIF -->
-                </ol>
 
+				{% set ol_microdata = 'itemscope itemtype="http://schema.org/BreadcrumbList"' %}
+				{% set li_microdata = 'itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"' %}
+				{% set a_microdata = 'itemprop="item"' %}
+				{% set span_microdata = 'itemprop="name"' %}
+
+				<ol class="breadcrumb" role="menubar"{{ ol_microdata }}>
+					<!-- EVENT overall_header_breadcrumbs_before -->
+
+					<!-- IF U_SITE_HOME -->
+						<li class="small-icon icon-home" {{ li_microdata }}>
+							<a href="{U_SITE_HOME}" {{ a_microdata }}>
+								<span {{ span_microdata }}>{{ lang('SITE_HOME') }}</span>
+							</a>
+						</li>
+					<!-- ENDIF -->
+
+					<!-- EVENT overall_header_breadcrumb_prepend -->
+					<li {{ li_microdata }}>
+						<a href="{U_INDEX}" accesskey="h" {{ a_microdata }}>
+							<span {{ span_microdata }}>{L_INDEX}</span>
+						</a>
+					</li>
+					<!-- BEGIN navlinks -->
+					<li {{ li_microdata }}>
+						<!-- EVENT overall_header_navlink_prepend -->
+						<a href="{navlinks.U_VIEW_FORUM}" {{ a_microdata }}>
+							<span {{ span_microdata }}>{navlinks.FORUM_NAME}</span>
+						</a>
+						<!-- EVENT overall_header_navlink_append -->
+					</li>
+					<!-- END navlinks -->
+
+		            <!-- IF S_DISPLAY_SEARCH and not S_IN_SEARCH -->
+					<li {{ li_microdata }}>
+						<a href="{U_SEARCH}" title="{L_SEARCH_ADV_EXPLAIN}" {{ a_microdata }}>
+							<span {{ span_microdata }}>{L_SEARCH}
+						</a>
+					</li>
+		            <!-- ENDIF -->
+
+					<!-- EVENT overall_header_breadcrumb_append -->
+				</ol>
+				<!-- EVENT overall_header_breadcrumbs_after -->
+               
             </div><!-- end #page-header -->
 
             {% EVENT overall_header_page_body_before %}

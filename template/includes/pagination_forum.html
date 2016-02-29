@@ -1,9 +1,10 @@
 <div class="btn-text">
     {% if not S_IS_BOT and U_MARK_TOPICS and loops.topicrow is not empty %}<a href="{U_MARK_TOPICS}" accesskey="m" data-ajax="mark_topics_read">{L_MARK_TOPICS_READ}</a> &bull; {% endif %}
     {TOTAL_TOPICS}
+    {% if loops.pagination is empty %}
+        &bull; {PAGE_NUMBER}
+    {% endif %}
 </div>
 {% if loops.pagination is not empty %}
     {% include "includes/pagination.html" %}
-{% else %}
-    &bull; {PAGE_NUMBER}
 {% endif %}
