@@ -3,14 +3,15 @@
 {% block inner_content %}
 <form id="ucp" method="post" action="{S_UCP_ACTION}"{S_FORM_ENCTYPE}>
 
-<h2>{TITLE}</h2>
-<div class="panel">
-	<div class="inner">
-
-		<p>{TITLE_EXPLAIN}</p>
+<div class="panel panel-default">
+	<div class="panel-heading">
+		{{ TITLE }}
+	</div>
+		
+		<p>{{ TITLE_EXPLAIN }}</p>
 
 		<!-- IF MODE == 'notification_options' -->
-			<table class="table1">
+			<table class="table">
 				<thead>
 					<tr>
 						<th>{L_NOTIFICATION_TYPE}</th>
