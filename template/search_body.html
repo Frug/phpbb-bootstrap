@@ -1,91 +1,103 @@
 {% extends "layout_main.html" %}
 
 {% block content %}
-<h2 class="solo">{L_SEARCH}</h2>
+<h2 class="solo">{{ lang('SEARCH') }}</h2>
 
 <!-- EVENT search_body_form_before -->
 <form method="get" action="{S_SEARCH_ACTION}" data-focus="keywords">
 
-<div class="panel">
-	<div class="inner">
-	<h3>{L_SEARCH_QUERY}</h3>
+<div class="panel panel-default">
+	<div class="panel-heading">
+		{{ lang('SEARCH_QUERY') }}
+	</div>
 
-	<fieldset>
-	<dl>
-		<dt><label for="keywords">{L_SEARCH_KEYWORDS}{L_COLON}</label><br /><span>{L_SEARCH_KEYWORDS_EXPLAIN}</span></dt>
-		<dd><input type="search" class="inputbox" name="keywords" id="keywords" size="40" title="{L_SEARCH_KEYWORDS}" /></dd>
-		<dd><label for="terms1"><input type="radio" name="terms" id="terms1" value="all" checked="checked" /> {L_SEARCH_ALL_TERMS}</label></dd>
-		<dd><label for="terms2"><input type="radio" name="terms" id="terms2" value="any" /> {L_SEARCH_ANY_TERMS}</label></dd>
-	</dl>
-	<dl>
-		<dt><label for="author">{L_SEARCH_AUTHOR}{L_COLON}</label><br /><span>{L_SEARCH_AUTHOR_EXPLAIN}</span></dt>
-		<dd><input type="search" class="inputbox" name="author" id="author" size="40" title="{L_SEARCH_AUTHOR}" /></dd>
-	</dl>
+	<div class="panel-body">
+		<div class="form-group">
+			<label for="keywords">{{ lang('SEARCH_KEYWORDS') }}{{ lang('COLON') }}</label><br>
+			<small>{{ lang('SEARCH_KEYWORDS_EXPLAIN') }}</small>
+			<input type="search" class="form-control" name="keywords" id="keywords" size="40" title="{{ lang('SEARCH_KEYWORDS') }}">
+		</div>
+		<div class="radio">
+			<label for="terms1"><input type="radio" name="terms" id="terms1" value="all" checked="checked"> {{ lang('SEARCH_ALL_TERMS') }}</label>
+		</div>
+		<div class="radio">
+			<label for="terms2"><input type="radio" name="terms" id="terms2" value="any" /> {{ lang('SEARCH_ANY_TERMS') }}</label>
+		</div>
+		<div class="form-group">
+			<label for="author">{{ lang('SEARCH_AUTHOR') }}{{ lang('COLON') }}</label><br>
+			<small>{{ lang('SEARCH_AUTHOR_EXPLAIN') }}</small>
+			<input type="search" class="form-control" name="author" id="author" size="40" title="{{ lang('SEARCH_AUTHOR') }}">
+		</div>
+	</div>
+
+	</div>
+</div>
+
+<div class="panel panel-default">
+	<div class="panel-heading">
+		{{ lang('SEARCH_OPTIONS') }}
+	</div>
+
+	<div class="panel-body">
+		<div class="form-group">
+			<label for="search_forum">{{ lang('SEARCH_FORUMS') }}{{ lang('COLON') }}</label><br>
+			<small>{{ lang('SEARCH_FORUMS_EXPLAIN') }}</small>
+			<select name="fid[]" id="search_forum" multiple="multiple" size="8" title="{{ lang('SEARCH_FORUMS') }}" class="form-control">
+				{{ S_FORUM_OPTIONS }}
+			</select>
+		</div>
+
+		<div class="form-group">
+			<label for="search_child1">{{ lang('SEARCH_SUBFORUMS') }}{{ lang('COLON') }}</label><br>
+			<div class="radio">
+				<label for="search_child1"><input type="radio" name="sc" id="search_child1" value="1" checked> {{ lang('YES') }}</label>&nbsp;
+				<label for="search_child2"><input type="radio" name="sc" id="search_child2" value="0"> {{ lang('NO') }}</label>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="sf1">{{ lang('SEARCH_WITHIN') }}{{ lang('COLON') }}</label><br>
+			<div class="radio">
+				<label for="sf1"><input type="radio" name="sf" id="sf1" value="all" checked> {{ lang('SEARCH_TITLE_MSG') }}</label><br>
+				<label for="sf2"><input type="radio" name="sf" id="sf2" value="msgonly"> {{ lang('SEARCH_MSG_ONLY') }}</label><br>
+				<label for="sf3"><input type="radio" name="sf" id="sf3" value="titleonly"> {{ lang('SEARCH_TITLE_ONLY') }}</label><br>
+				<label for="sf4"><input type="radio" name="sf" id="sf4" value="firstpost"> {{ lang('SEARCH_FIRST_POST') }}</label>
+			</div>
+		</div>
+
+	<hr class="dashed">
+
+	<div class="form-group">
+		<label for="show_results1">{{ lang('DISPLAY_RESULTS') }}{{ lang('COLON') }}</label>
+		<div class="radio">
+			<label for="show_results1"><input type="radio" name="sr" id="show_results1" value="posts"> {{ lang('POSTS') }}</label>
+			<label for="show_results2"><input type="radio" name="sr" id="show_results2" value="topics"> {{ lang('TOPICS') }}</label>
+		</div>
+	</div>
+	<div class="form-group">
+		<label for="sd">{{ lang('RESULT_SORT') }}{{ lang('COLON') }}</label>
+		{{ S_SELECT_SORT_KEY }}&nbsp;
+		<label for="sa"><input type="radio" name="sd" id="sa" value="a" /> {{ lang('SORT_ASCENDING') }}</label>
+		<label for="sd"><input type="radio" name="sd" id="sd" value="d" checked="checked" /> {{ lang('SORT_DESCENDING') }}</label>
+	</div>
+	<div class="form-group">
+		<label>{{ lang('RESULT_DAYS') }}{{ lang('COLON') }}</label>
+		{{ S_SELECT_SORT_DAYS }}
+	</div>
+	<div class="form-group">
+		<label>{{ lang('RETURN_FIRST') }}{{ lang('COLON') }}</label>
+		<select name="ch" title="{{ lang('RETURN_FIRST') }}">{S_CHARACTER_OPTIONS}</select> {{ lang('POST_CHARACTERS') }}
+	</div>
 	</fieldset>
 
 	</div>
 </div>
 
-<div class="panel bg2">
-	<div class="inner">
-
-	<h3>{L_SEARCH_OPTIONS}</h3>
-
-	<fieldset>
-	<dl>
-		<dt><label for="search_forum">{L_SEARCH_FORUMS}{L_COLON}</label><br /><span>{L_SEARCH_FORUMS_EXPLAIN}</span></dt>
-		<dd><select name="fid[]" id="search_forum" multiple="multiple" size="8" title="{L_SEARCH_FORUMS}">{S_FORUM_OPTIONS}</select></dd>
-	</dl>
-	<dl>
-		<dt><label for="search_child1">{L_SEARCH_SUBFORUMS}{L_COLON}</label></dt>
-		<dd>
-			<label for="search_child1"><input type="radio" name="sc" id="search_child1" value="1" checked="checked" /> {L_YES}</label>
-			<label for="search_child2"><input type="radio" name="sc" id="search_child2" value="0" /> {L_NO}</label>
-		</dd>
-	</dl>
-	<dl>
-		<dt><label for="sf1">{L_SEARCH_WITHIN}{L_COLON}</label></dt>
-		<dd><label for="sf1"><input type="radio" name="sf" id="sf1" value="all" checked="checked" /> {L_SEARCH_TITLE_MSG}</label></dd>
-		<dd><label for="sf2"><input type="radio" name="sf" id="sf2" value="msgonly" /> {L_SEARCH_MSG_ONLY}</label></dd>
-		<dd><label for="sf3"><input type="radio" name="sf" id="sf3" value="titleonly" /> {L_SEARCH_TITLE_ONLY}</label></dd>
-		<dd><label for="sf4"><input type="radio" name="sf" id="sf4" value="firstpost" /> {L_SEARCH_FIRST_POST}</label></dd>
-	</dl>
-
-	<hr class="dashed" />
-
-	<dl>
-		<dt><label for="show_results1">{L_DISPLAY_RESULTS}{L_COLON}</label></dt>
-		<dd>
-			<label for="show_results1"><input type="radio" name="sr" id="show_results1" value="posts" checked="checked" /> {L_POSTS}</label>
-			<label for="show_results2"><input type="radio" name="sr" id="show_results2" value="topics" /> {L_TOPICS}</label>
-		</dd>
-	</dl>
-	<dl>
-		<dt><label for="sd">{L_RESULT_SORT}{L_COLON}</label></dt>
-		<dd>{S_SELECT_SORT_KEY}&nbsp;
-			<label for="sa"><input type="radio" name="sd" id="sa" value="a" /> {L_SORT_ASCENDING}</label>
-			<label for="sd"><input type="radio" name="sd" id="sd" value="d" checked="checked" /> {L_SORT_DESCENDING}</label>
-		</dd>
-	</dl>
-	<dl>
-		<dt><label>{L_RESULT_DAYS}{L_COLON}</label></dt>
-		<dd>{S_SELECT_SORT_DAYS}</dd>
-	</dl>
-	<dl>
-		<dt><label>{L_RETURN_FIRST}{L_COLON}</label></dt>
-		<dd><select name="ch" title="{L_RETURN_FIRST}">{S_CHARACTER_OPTIONS}</select> {L_POST_CHARACTERS}</dd>
-	</dl>
-	</fieldset>
-
-	</div>
-</div>
-
-<div class="panel bg3">
-	<div class="inner">
+<div class="panel panel-default">
+	<div class="panel-body">
 
 	<fieldset class="submit-buttons">
-		{S_HIDDEN_FIELDS}<input type="reset" value="{L_RESET}" name="reset" class="button2" />&nbsp;
-		<input type="submit" name="submit" value="{L_SEARCH}" class="button1" />
+		{S_HIDDEN_FIELDS}<input type="reset" value="{{ lang('RESET') }}" name="reset" class="btn btn-warning">&nbsp;
+		<input type="submit" name="submit" value="{{ lang('SEARCH') }}" class="btn btn-success" >
 	</fieldset>
 
 	</div>
@@ -100,7 +112,7 @@
 	<table class="table1">
 	<thead>
 	<tr>
-		<th colspan="2" class="name">{L_RECENT_SEARCHES}</th>
+		<th colspan="2" class="name">{{ lang('RECENT_SEARCHES') }}</th>
 	</tr>
 	</thead>
 	<tbody>
@@ -111,7 +123,7 @@
 		</tr>
 	<!-- BEGINELSE -->
 		<tr class="bg1">
-			<td colspan="2">{L_NO_RECENT_SEARCHES}</td>
+			<td colspan="2">{{ lang('NO_RECENT_SEARCHES') }}</td>
 		</tr>
 	<!-- END recentsearch -->
 	</tbody>
