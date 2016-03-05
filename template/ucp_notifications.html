@@ -1,15 +1,12 @@
 {% extends "layout_ucp.html" %}
 
 {% block inner_content %}
-<form id="ucp" method="post" action="{S_UCP_ACTION}"{S_FORM_ENCTYPE}>
+<div class="panel-heading"><h2 class="panel-title">{{ TITLE }}</h2></div>
 
-<div class="panel panel-default">
-	<div class="panel-heading">
-		{{ TITLE }}
-	</div>
-		
-		<p>{{ TITLE_EXPLAIN }}</p>
+<div class="panel-body">
+<form id="ucp" method="post" action="{S_UCP_ACTION}"{{ S_FORM_ENCTYPE }}>
 
+	<p>{{ TITLE_EXPLAIN }}</p>
 		<!-- IF MODE == 'notification_options' -->
 			<table class="table">
 				<thead>
@@ -106,8 +103,6 @@
 			<!-- ENDIF -->
 
 		<!-- ENDIF -->
-	</div>
-</div>
 
 <!-- IF .notification_types or .notification_list -->
 <fieldset class="display-actions">
@@ -120,4 +115,5 @@
 <!-- ENDIF -->
 
 </form>
+</div>
 {% endblock %}

@@ -1,147 +1,123 @@
 {% extends "layout_ucp.html" %}
 
 {% block inner_content %}
-<form id="ucp" method="post" action="{S_UCP_ACTION}"{S_FORM_ENCTYPE}>
 
-<h2>{L_TITLE}</h2>
-<div class="panel">
-	<div class="inner">
+<div class="panel-heading"><h2 class="panel-title">{{ lang('TITLE') }}</h2></div>
 
-	<p>{L_WATCHED_EXPLAIN}</p>
+<div class="panel-body">
+<form id="ucp" method="post" action="{S_UCP_ACTION}"{{ S_FORM_ENCTYPE }}>
 
-<!-- IF .forumrow -->
-	<ul class="topiclist missing-column">
-		<li class="header">
-			<dl class="icon">
-				<dt><div class="list-inner">{L_WATCHED_FORUMS}</div></dt>
-				<dd class="lastpost"><span>{L_LAST_POST}</span></dd>
-				<dd class="mark">{L_MARK}</dd>
-			</dl>
-		</li>
-	</ul>
-	<ul class="topiclist cplist missing-column">
+<p>{{ lang('WATCHED_EXPLAIN') }}</p>
 
+{% if loops.forumrow is not empty %}
+	<table class="table">
+		<tr>
+			<th class="col-sm-5">{{ lang('WATCHED_FORUMS') }}</th>
+			<th class="col-sm-5">{{ lang('LAST_POST') }}</th>
+			<th class="col-sm-2">{{ lang('MARK') }}</th>
+		</tr>
 	<!-- BEGIN forumrow -->
-		<li class="row<!-- IF forumrow.S_ROW_COUNT is odd --> bg1<!-- ELSE --> bg2<!-- ENDIF -->">
-			<dl class="icon {forumrow.FORUM_IMG_STYLE}">
-				<dt>
-					<!-- IF forumrow.S_UNREAD_FORUM --><a href="{forumrow.U_VIEWFORUM}" class="icon-link"></a><!-- ENDIF -->
-					<div class="list-inner">
-						<a href="{forumrow.U_VIEWFORUM}" class="forumtitle">{forumrow.FORUM_NAME}</a><br />
-						{forumrow.FORUM_DESC}
-						<!-- IF forumrow.LAST_POST_TIME -->
-						<div class="responsive-show" style="display: none;">
-							{L_LAST_POST} {L_POST_BY_AUTHOR} {forumrow.LAST_POST_AUTHOR_FULL} &laquo; <a href="{topicrow.U_LAST_POST}">{forumrow.LAST_POST_TIME}</a>
-						</div>
-						<!-- ENDIF -->
+		<tr class="icon {forumrow.FORUM_IMG_STYLE}">
+			<td>
+				{% if forumrow.S_UNREAD_FORUM %}<a href="{forumrow.U_VIEWFORUM}" class="icon-link"></a>{% endif %}
+				<div class="list-inner">
+					<a href="{forumrow.U_VIEWFORUM}" class="forumtitle">{forumrow.FORUM_NAME}</a><br>
+					{forumrow.FORUM_DESC}
+					{% if forumrow.LAST_POST_TIME %}
+					<div class="responsive-show" style="display: none;">
+						{{ lang('LAST_POST') }} {{ lang('POST_BY_AUTHOR') }} {forumrow.LAST_POST_AUTHOR_FULL} &laquo; <a href="{topicrow.U_LAST_POST}">{forumrow.LAST_POST_TIME}</a>
 					</div>
-				</dt>
-				<dd class="lastpost"><!-- IF forumrow.LAST_POST_TIME --><span><dfn>{L_LAST_POST} </dfn>{L_POST_BY_AUTHOR} {forumrow.LAST_POST_AUTHOR_FULL}
-					<a href="{forumrow.U_LAST_POST}">{LAST_POST_IMG}</a> <br />{forumrow.LAST_POST_TIME}</span>
-					<!-- ELSE -->{L_NO_POSTS}<br />&nbsp;<!-- ENDIF -->
-				</dd>
-				<dd class="mark"><input type="checkbox" name="f[{forumrow.FORUM_ID}]" id="f{forumrow.FORUM_ID}" /></dd>
-			</dl>
-		</li>
+					{% endif %}
+				</div>
+			</td>
+			<td class="lastpost">{% if forumrow.LAST_POST_TIME %}<span><dfn>{{ lang('LAST_POST') }} </dfn>{{ lang('POST_BY_AUTHOR') }} {forumrow.LAST_POST_AUTHOR_FULL}
+				<a href="{forumrow.U_LAST_POST}">{LAST_POST_IMG}</a> <br>{forumrow.LAST_POST_TIME}</span>
+				{% else %}{{ lang('NO_POSTS') }}<br>&nbsp;{% endif %}
+			</td>
+			<td class="mark-col"><input type="checkbox" name="f[{forumrow.FORUM_ID}]" id="f{forumrow.FORUM_ID}" /></td>
+		</tr>
 	<!-- END forumrow -->
-	</ul>
-<!-- ELSEIF S_FORUM_NOTIFY -->
-    <ul class="topiclist">
-        <li class="header">
-            <dl class="icon">
-                <dt>{L_WATCHED_FORUMS}</dt>
-            </dl>
-        </li>
-    </ul>
-	<p><strong>{L_NO_WATCHED_FORUMS}</strong></p>
-<!-- ENDIF -->
-    <br />
+	</table>
+{% elseif S_FORUM_NOTIFY %}
+	<h2>{{ lang('WATCHED_FORUMS') }}</h2>
+	<p><strong>{{ lang('NO_WATCHED_FORUMS') }}</strong></p>
+{% endif %}
+    <br>
 
-<!-- IF .topicrow -->
-	<ul class="topiclist missing-column">
-		<li class="header">
-			<dl class="icon">
-				<dt><div class="list-inner">{L_WATCHED_TOPICS}</div></dt>
-				<dd class="lastpost"><span>{L_LAST_POST}</span></dd>
-				<dd class="mark">{L_MARK}</dd>
-			</dl>
-		</li>
-	</ul>
-	<ul class="topiclist cplist missing-column">
-
+{% if loops.topicrow is not empty %}
+	<table class="table">
+		<tr>
+			<th class="col-sm-5">{{ lang('WATCHED_TOPICS') }}</th>
+			<th class="col-sm-5">{{ lang('LAST_POST') }}</th>
+			<th class="col-sm-2">{{ lang('MARK') }}</th>
+		</tr>
 	<!-- BEGIN topicrow -->
-		<li class="row<!-- IF topicrow.S_TOPIC_REPORTED --> reported<!-- ELSEIF topicrow.S_ROW_COUNT is odd --> bg1<!-- ELSE --> bg2<!-- ENDIF -->">
-			<dl class="icon {topicrow.TOPIC_IMG_STYLE}">
-				<dt<!-- IF topicrow.TOPIC_ICON_IMG --> style="background-image: url({T_ICONS_PATH}{topicrow.TOPIC_ICON_IMG}); background-repeat: no-repeat;"<!-- ENDIF --> title="{topicrow.TOPIC_FOLDER_IMG_ALT}">
-					<!-- IF topicrow.S_UNREAD_TOPIC --><a href="{topicrow.U_NEWEST_POST}" class="icon-link"></a><!-- ENDIF -->
-					<div class="list-inner">
-						<!-- IF topicrow.S_UNREAD_TOPIC --><a href="{topicrow.U_NEWEST_POST}">{NEWEST_POST_IMG}</a> <!-- ENDIF --><a href="{topicrow.U_VIEW_TOPIC}" class="topictitle">{topicrow.TOPIC_TITLE}</a>
-						<!-- IF topicrow.S_TOPIC_UNAPPROVED or topicrow.S_POSTS_UNAPPROVED --><a href="{topicrow.U_MCP_QUEUE}">{topicrow.UNAPPROVED_IMG}</a> <!-- ENDIF -->
-						<!-- IF topicrow.S_TOPIC_REPORTED --><a href="{topicrow.U_MCP_REPORT}">{REPORTED_IMG}</a><!-- ENDIF --><br />
-						<!-- IF .topicrow.pagination -->
-						<div class="pagination">
-							<ul>
-							<!-- BEGIN pagination -->
-								<!-- IF topicrow.pagination.S_IS_PREV -->
-								<!-- ELSEIF topicrow.pagination.S_IS_CURRENT --><li class="active"><span>{topicrow.pagination.PAGE_NUMBER}</span></li>
-								<!-- ELSEIF topicrow.pagination.S_IS_ELLIPSIS --><li class="ellipsis"><span>{L_ELLIPSIS}</span></li>
-								<!-- ELSEIF topicrow.pagination.S_IS_NEXT -->
-								<!-- ELSE --><li><a href="{topicrow.pagination.PAGE_URL}">{topicrow.pagination.PAGE_NUMBER}</a></li>
-								<!-- ENDIF -->
-							<!-- END pagination -->
-							</ul>
-						</div>
-						<!-- ENDIF -->
-						<div class="responsive-hide">
-							<!-- IF topicrow.ATTACH_ICON_IMG -->{topicrow.ATTACH_ICON_IMG} <!-- ENDIF -->
-							{L_POST_BY_AUTHOR} {topicrow.TOPIC_AUTHOR_FULL} &raquo; {topicrow.FIRST_POST_TIME}
-						</div>
-						<div class="responsive-show" style="display: none;">
-							<!-- IF topicrow.ATTACH_ICON_IMG -->{topicrow.ATTACH_ICON_IMG} <!-- ENDIF -->
-							{L_LAST_POST} {L_POST_BY_AUTHOR} {topicrow.LAST_POST_AUTHOR_FULL} &laquo; <a href="{topicrow.U_LAST_POST}" title="{L_GOTO_LAST_POST}">{topicrow.LAST_POST_TIME}</a>
-						</div>
+		<tr class="icon {topicrow.TOPIC_IMG_STYLE}">
+			<td{% if topicrow.TOPIC_ICON_IMG %} style="background-image: url({T_ICONS_PATH}{topicrow.TOPIC_ICON_IMG}); background-repeat: no-repeat;"{% endif %} title="{topicrow.TOPIC_FOLDER_IMG_ALT}">
+				{% if topicrow.S_UNREAD_TOPIC %}<a href="{topicrow.U_NEWEST_POST}" class="icon-link"></a>{% endif %}
+				<div class="list-inner">
+					{% if topicrow.S_UNREAD_TOPIC %}<a href="{topicrow.U_NEWEST_POST}">{NEWEST_POST_IMG}</a> {% endif %}<a href="{topicrow.U_VIEW_TOPIC}" class="topictitle">{topicrow.TOPIC_TITLE}</a>
+					{% if topicrow.S_TOPIC_UNAPPROVED or topicrow.S_POSTS_UNAPPROVED %}<a href="{topicrow.U_MCP_QUEUE}">{topicrow.UNAPPROVED_IMG}</a> {% endif %}
+					{% if topicrow.S_TOPIC_REPORTED %}<a href="{topicrow.U_MCP_REPORT}">{REPORTED_IMG}</a>{% endif %}<br>
+					{% if loops.topicrow.pagination %}
+					<div class="pagination">
+						<ul>
+						<!-- BEGIN pagination -->
+							{% if topicrow.pagination.S_IS_PREV %}
+							{% elseif topicrow.pagination.S_IS_CURRENT %}<li class="active"><span>{topicrow.pagination.PAGE_NUMBER}</span></li>
+							{% elseif topicrow.pagination.S_IS_ELLIPSIS %}<li class="ellipsis"><span>{{ lang('ELLIPSIS') }}</span></li>
+							{% elseif topicrow.pagination.S_IS_NEXT %}
+							{% else %}<li><a href="{topicrow.pagination.PAGE_URL}">{topicrow.pagination.PAGE_NUMBER}</a></li>
+							{% endif %}
+						<!-- END pagination -->
+						</ul>
 					</div>
-				</dt>
-				<dd class="lastpost"><span><dfn>{L_LAST_POST} </dfn>{L_POST_BY_AUTHOR} {topicrow.LAST_POST_AUTHOR_FULL}
-					<a href="{topicrow.U_LAST_POST}" title="{L_GOTO_LAST_POST}">{LAST_POST_IMG}</a> <br />{topicrow.LAST_POST_TIME}</span>
-				</dd>
-				<dd class="mark"><input type="checkbox" name="t[{topicrow.TOPIC_ID}]" id="t{topicrow.TOPIC_ID}" /></dd>
-			</dl>
-		</li>
+					{% endif %}
+					<div class="responsive-hide">
+						{% if topicrow.ATTACH_ICON_IMG %}{topicrow.ATTACH_ICON_IMG} {% endif %}
+						{{ lang('POST_BY_AUTHOR') }} {topicrow.TOPIC_AUTHOR_FULL} &raquo; {topicrow.FIRST_POST_TIME}
+					</div>
+					<div class="responsive-show" style="display: none;">
+						{% if topicrow.ATTACH_ICON_IMG %}{topicrow.ATTACH_ICON_IMG} {% endif %}
+						{{ lang('LAST_POST') }} {{ lang('POST_BY_AUTHOR') }} {topicrow.LAST_POST_AUTHOR_FULL} &laquo; <a href="{topicrow.U_LAST_POST}" title="{{ lang('GOTO_LAST_POST') }}">{topicrow.LAST_POST_TIME}</a>
+					</div>
+				</div>
+			</td>
+			<td class="lastpost"><span><dfn>{{ lang('LAST_POST') }} </dfn>{{ lang('POST_BY_AUTHOR') }} {topicrow.LAST_POST_AUTHOR_FULL}
+				<a href="{topicrow.U_LAST_POST}" title="{{ lang('GOTO_LAST_POST') }}">{LAST_POST_IMG}</a> <br>{topicrow.LAST_POST_TIME}</span>
+			</td>
+			<td class="mark-col"><input type="checkbox" name="t[{topicrow.TOPIC_ID}]" id="t{topicrow.TOPIC_ID}"></td>
+		</tr>
 	<!-- END topicrow -->
-	</ul>
+	</table>
 
 	<div class="action-bar bottom">
 		<div class="pagination">
 			{TOTAL_TOPICS}
-			<!-- IF .pagination --> 
+			{% if loops.pagination is not empty %}
 				<!-- INCLUDE includes/pagination.html -->
-			<!-- ELSE --> 
+			{% else %} 
 				 &bull; {PAGE_NUMBER}
-			<!-- ENDIF -->
+			{% endif %}
 		</div>
 	</div>
 
-<!-- ELSEIF S_TOPIC_NOTIFY -->
-    <ul class="topiclist">
-        <li class="header">
-            <dl class="icon">
-                <dt>{L_WATCHED_TOPICS}</dt>
-            </dl>
-        </li>
-    </ul>
-	<p><strong>{L_NO_WATCHED_TOPICS}</strong></p>
-<!-- ENDIF -->
+{% elseif S_TOPIC_NOTIFY %}
+	<h2>{{ lang('WATCHED_TOPICS') }}</h2>
+	<p><strong>{{ lang('NO_WATCHED_TOPICS') }}</strong></p>
+{% endif %}
 
-	</div>
-</div>
 
 <!-- IF .topicrow or .forumrow -->
-	<fieldset class="display-actions">
-		<input type="submit" name="unwatch" value="{L_UNWATCH_MARKED}" class="button2" />
-		<div><a href="#" onclick="marklist('ucp', 't', true); marklist('ucp', 'f', true); return false;">{L_MARK_ALL}</a> &bull; <a href="#" onclick="marklist('ucp', 't', false); marklist('ucp', 'f', false); return false;">{L_UNMARK_ALL}</a></div>
-		{S_FORM_TOKEN}
-	</fieldset>
+	<div class="display-actions pull-right">
+		<input type="submit" name="unwatch" value="{{ lang('UNWATCH_MARKED') }}" class="btn btn-warning"><br>
+		<a href="#" onclick="marklist('ucp', 't', true); marklist('ucp', 'f', true); return false;">{{ lang('MARK_ALL') }}</a>
+		&bull;
+		<a href="#" onclick="marklist('ucp', 't', false); marklist('ucp', 'f', false); return false;">{{ lang('UNMARK_ALL') }}</a>
+		{{ S_FORM_TOKEN }}
+	</div>
 <!-- ENDIF -->
+
 </form>
+</div>
 {% endblock %}

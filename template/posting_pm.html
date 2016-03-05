@@ -1,43 +1,46 @@
 {% extends "layout_ucp.html" %}
 
 {% block inner_content %}
-<!-- IF S_DRAFT_LOADED -->
-	<div class="panel">
-		<div class="inner">
-		
-		<h3>{L_INFORMATION}</h3>
-		<p>{L_DRAFT_LOADED_PM}</p>
-		
+<div class="panel-heading"><h2 class="panel-title">{{ lang('TITLE') }}</h2></div>
+
+<div class="panel-body">
+
+	{% if S_DRAFT_LOADED %}
+		<div class="panel">
+			<div class="panel-body">
+			
+			<h3>{L_INFORMATION}</h3>
+			<p>{L_DRAFT_LOADED_PM}</p>
+			
+			</div>
+		</div>
+	{% endif %}
+
+	{% if S_SHOW_DRAFTS %}<!-- INCLUDE drafts.html -->{% endif %}
+
+	{% if S_DISPLAY_PREVIEW %}<!-- INCLUDE posting_preview.html -->{% endif %}
+
+	<div class="panel panel-default" id="pmheader-postingbox">
+		<div class="panel-body">
+		<!-- EVENT posting_pm_layout_include_pm_header_before -->
+		<!-- INCLUDE posting_pm_header.html -->
+		<!-- EVENT posting_pm_layout_include_pm_header_after -->
 		</div>
 	</div>
-<!-- ENDIF -->
 
-<!-- IF S_SHOW_DRAFTS --><!-- INCLUDE drafts.html --><!-- ENDIF -->
+	<div class="panel panel-default" id="postingbox">
+		<div class="panel-body">
 
-<!-- IF S_DISPLAY_PREVIEW --><!-- INCLUDE posting_preview.html --><!-- ENDIF -->
+		<!-- DEFINE $EXTRA_POSTING_OPTIONS = 1 -->
+		{% include "includes/posting_editor.html" %}
 
-<h2 class="posting-title">{L_TITLE}</h2>
-
-<div class="panel" id="pmheader-postingbox">
-	<div class="inner">
-	<!-- EVENT posting_pm_layout_include_pm_header_before -->
-	<!-- INCLUDE posting_pm_header.html -->
-	<!-- EVENT posting_pm_layout_include_pm_header_after -->
+		</div>
 	</div>
-</div>
-
-<div class="panel" id="postingbox">
-	<div class="inner">
-
-	<!-- DEFINE $EXTRA_POSTING_OPTIONS = 1 -->
-	{% include "includes/posting_editor.html" %}
-
-	</div>
-</div>
 
 <!-- IF S_SHOW_ATTACH_BOX --><!-- INCLUDE posting_attach_body.html --><!-- ENDIF -->
 
 <!-- IF S_DISPLAY_REVIEW --><!-- INCLUDE posting_topic_review.html --><!-- ENDIF -->
 
 <!-- IF S_DISPLAY_HISTORY --><!-- INCLUDE ucp_pm_history.html --><!-- ENDIF -->
+</div>
 {% endblock %}

@@ -6,6 +6,10 @@
     --------------------------------------------------------------
 */
 
+.top-buffer {
+	margin-top: 10px;
+}
+
 .skiplink a {
 	padding: 6px;
 	position: absolute;

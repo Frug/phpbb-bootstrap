@@ -1,14 +1,12 @@
 {% extends "layout_ucp.html" %}
 
 {% block inner_content %}
-<form id="ucp" method="post" action="{S_UCP_ACTION}"{S_FORM_ENCTYPE}>
+<div class="panel-heading"><h2 class="panel-title">{{ lang('TITLE') }}</h2></div>
 
-<h2>{L_TITLE}</h2>
+<div class="panel-body">
+<form id="ucp" method="post" action="{S_UCP_ACTION}"{{ S_FORM_ENCTYPE }}>
 
-<div class="panel">
-	<div class="inner">
-	
-	<p>{L_ATTACHMENTS_EXPLAIN}</p>
+<p>{{ lang('ATTACHMENTS_EXPLAIN') }}</p>
 
 	<!-- IF .attachrow -->
 		<div class="action-bar top">
@@ -25,22 +23,22 @@
 		<ul class="topiclist">
 			<li class="header">
 				<dl>
-					<dt><div class="list-inner"><a href="{U_SORT_FILENAME}">{L_FILENAME}</a></div></dt>
-					<dd class="extra"><a href="{U_SORT_DOWNLOADS}">{L_DOWNLOADS}</a></dd>
-					<dd class="time"><span><a href="{U_SORT_POST_TIME}">{L_POST_TIME}</a></span></dd>
-					<dd class="mark">{L_MARK}</dd>
+					<dt><div class="list-inner"><a href="{U_SORT_FILENAME}">{{ lang('FILENAME') }}</a></div></dt>
+					<dd class="extra"><a href="{U_SORT_DOWNLOADS}">{{ lang('DOWNLOADS') }}</a></dd>
+					<dd class="time"><span><a href="{U_SORT_POST_TIME}">{{ lang('POST_TIME') }}</a></span></dd>
+					<dd class="mark-col">{{ lang('MARK') }}</dd>
 				</dl>
 			</li>
 		</ul>
 		<ul class="topiclist cplist responsive-show-columns">
 
 		<!-- BEGIN attachrow -->
-		<li class="row<!-- IF attachrow.S_ROW_COUNT is odd --> bg1<!-- ELSE --> bg2<!-- ENDIF -->">
+		<li class="row">
 			<dl>
 				<dt>
 					<div class="list-inner">
-						<a href="{attachrow.U_VIEW_ATTACHMENT}" class="topictitle attachment-filename ellipsis-text" title="{attachrow.FILENAME}">{attachrow.FILENAME}</a> ({attachrow.SIZE})<br />
-						<!-- IF attachrow.S_IN_MESSAGE -->{L_PM}{L_COLON} <!-- ELSE -->{L_TOPIC}{L_COLON} <!-- ENDIF --><a href="{attachrow.U_VIEW_TOPIC}">{attachrow.TOPIC_TITLE}</a>
+						<a href="{attachrow.U_VIEW_ATTACHMENT}" class="topictitle attachment-filename ellipsis-text" title="{attachrow.FILENAME}">{attachrow.FILENAME}</a> ({attachrow.SIZE})<br>
+						<!-- IF attachrow.S_IN_MESSAGE -->{{ lang('PM') }}{{ lang('COLON') }} <!-- ELSE -->{{ lang('TOPIC') }}{{ lang('COLON') }} <!-- ENDIF --><a href="{attachrow.U_VIEW_TOPIC}">{attachrow.TOPIC_TITLE}</a>
 					</div>
 				</dt>
 				<dd class="extra">{attachrow.DOWNLOAD_COUNT}</dd>
@@ -52,9 +50,9 @@
 		</ul>
 
 		<fieldset class="display-options">
-			<label for="sk">{L_SORT_BY}{L_COLON} <select name="sk" id="sk">{S_SORT_OPTIONS}</select></label> 
+			<label for="sk">{{ lang('SORT_BY') }}{{ lang('COLON') }} <select name="sk" id="sk">{S_SORT_OPTIONS}</select></label> 
 			<label><select name="sd" id="sd">{S_ORDER_SELECT}</select></label>
-			<input class="button2" type="submit" name="sort" value="{L_SORT}" />
+			<input class="button2" type="submit" name="sort" value="{{ lang('SORT') }}" />
 			{S_FORM_TOKEN}
 		</fieldset>
 
@@ -62,7 +60,7 @@
 
 		<div class="action-bar bottom">
 			<div class="pagination">
-				{TOTAL_ATTACHMENTS} {L_TITLE}
+				{TOTAL_ATTACHMENTS} {{ lang('TITLE') }}
 				<!-- IF .pagination --> 
 					<!-- INCLUDE includes/pagination.html -->
 				<!-- ELSE --> 
@@ -72,18 +70,18 @@
 		</div>
 
 	<!-- ELSE -->
-		<p><strong>{L_UCP_NO_ATTACHMENTS}</strong></p>
+		<p><strong>{{ lang('UCP_NO_ATTACHMENTS') }}</strong></p>
 	<!-- ENDIF -->
 
-	</div>
-</div>
 	
 <!-- IF S_ATTACHMENT_ROWS -->
 	<fieldset class="display-actions">	
-		<input class="button2" type="submit" name="delete" value="{L_DELETE_MARKED}" />
-		<div><a href="#" onclick="marklist('ucp', 'attachment', true); return false;">{L_MARK_ALL}</a> &bull; <a href="#" onclick="marklist('ucp', 'attachment', false); return false;">{L_UNMARK_ALL}</a></div>
+		<input class="button2" type="submit" name="delete" value="{{ lang('DELETE_MARKED') }}" />
+		<div><a href="#" onclick="marklist('ucp', 'attachment', true); return false;">{{ lang('MARK_ALL') }}</a> &bull; <a href="#" onclick="marklist('ucp', 'attachment', false); return false;">{{ lang('UNMARK_ALL') }}</a></div>
 		{S_FORM_TOKEN}
 	</fieldset>
 <!-- ENDIF -->
+
 </form>
+</div>
 {% endblock %}
