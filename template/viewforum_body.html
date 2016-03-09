@@ -17,33 +17,33 @@
 {% endif %}
 
 {% if S_HAS_SUBFORUM %}
-    {% if not S_IS_BOT and U_MARK_FORUMS %}
-	<div class="action-bar compact">
-		<a href="{U_MARK_FORUMS}" class="mark-read rightside" data-ajax="mark_forums_read">{L_MARK_SUBFORUMS_READ}</a>
-	</div>
-    {% endif %}
-	{% include "includes/forumlist.html" %}
+{% if not S_IS_BOT and U_MARK_FORUMS %}
+<div class="action-bar compact">
+	<a href="{U_MARK_FORUMS}" class="mark-read rightside" data-ajax="mark_forums_read">{L_MARK_SUBFORUMS_READ}</a>
+</div>
+{% endif %}
+{% include "includes/forumlist.html" %}
 {% endif %}
 
 {% if S_DISPLAY_POST_INFO or loops.pagination is not empty or TOTAL_POSTS or TOTAL_TOPICS %}
 	{% if S_DISPLAY_SEARCHBOX %}
-    <div class="row">
-        <form method="get" id="forum-search" class="search-box col-md-6 col-md-offset-6" action="{S_SEARCHBOX_ACTION}">
-            <div class="input-group">
-                <input class="form-control" type="search" name="keywords" id="search_keywords" size="20" placeholder="{L_SEARCH_FORUM}">
-                <span class="input-group-btn">
-                    <button class="btn btn-default" type="submit" title="{L_SEARCH}">{L_SEARCH}</button>
-                </span>
-            </div>
+	<div class="row">
+		<form method="get" id="forum-search" class="search-box col-md-6 col-md-offset-6" action="{S_SEARCHBOX_ACTION}">
+			<div class="input-group">
+				<input class="form-control" type="search" name="keywords" id="search_keywords" size="20" placeholder="{L_SEARCH_FORUM}">
+				<span class="input-group-btn">
+					<button class="btn btn-default" type="submit" title="{L_SEARCH}">{L_SEARCH}</button>
+				</span>
+			</div>
 
-            <a href="{U_SEARCH}" class="button icon-button search-adv-icon" title="{L_SEARCH_ADV}">{L_SEARCH_ADV}</a>
-            {S_SEARCH_LOCAL_HIDDEN_FIELDS}
-        </form>
-    </div><!-- end .row -->
+			<a href="{U_SEARCH}" class="button icon-button search-adv-icon" title="{L_SEARCH_ADV}">{L_SEARCH_ADV}</a>
+			{S_SEARCH_LOCAL_HIDDEN_FIELDS}
+		</form>
+	</div><!-- end .row -->
 	{% endif %}
-    <br>
-    <div class="row">
-        {% if not S_IS_BOT and S_DISPLAY_POST_INFO %}
+	<br>
+	<div class="row">
+		{% if not S_IS_BOT and S_DISPLAY_POST_INFO %}
 		<div class="btn-group col-md-4">
 			{% EVENT viewforum_buttons_top_before %}
 
@@ -53,20 +53,20 @@
 
 			{% EVENT viewforum_buttons_top_after %}
 		</div>
-        {% endif %}
-        <div class="col-md-8 text-right">
-            {% include "includes/pagination_forum.html" %}
-        </div>
-    
-    </div><!-- end .row -->
-    <br>
+		{% endif %}
+		<div class="col-md-8 text-right">
+			{% include "includes/pagination_forum.html" %}
+		</div>
+	
+	</div><!-- end .row -->
+	<br>
 {% endif %}
 
 {% if S_NO_READ_ACCESS %}
 	<div class="panel panel-danger">
-        <div class="panel-body">
-            <strong>{L_NO_READ_ACCESS}</strong>
-        </div>
+		<div class="panel-body">
+			<strong>{L_NO_READ_ACCESS}</strong>
+		</div>
 	</div>
 
 	<!-- IF not S_USER_LOGGED_IN and not S_IS_BOT -->
@@ -121,55 +121,55 @@
 		<div class="panel-body topics">
 	<!-- ENDIF -->
 
-            <div class="row{% if topicrow.S_POST_GLOBAL %} global-announce{% endif %}{% if topicrow.S_POST_ANNOUNCE %} announce{% endif %}{% if topicrow.S_POST_STICKY %} sticky{% endif %}{% if topicrow.S_TOPIC_REPORTED %} reported{% endif %} icon {topicrow.TOPIC_IMG_STYLE}">
-                <div class="col-md-6"
-                    {% if topicrow.TOPIC_ICON_IMG and S_TOPIC_ICONS %} style="background-image: url({T_ICONS_PATH}{topicrow.TOPIC_ICON_IMG}); background-repeat: no-repeat;"{% endif %} 
-                    title="{topicrow.TOPIC_FOLDER_IMG_ALT}">
+			<div class="row{% if topicrow.S_POST_GLOBAL %} global-announce{% endif %}{% if topicrow.S_POST_ANNOUNCE %} announce{% endif %}{% if topicrow.S_POST_STICKY %} sticky{% endif %}{% if topicrow.S_TOPIC_REPORTED %} reported{% endif %} icon {topicrow.TOPIC_IMG_STYLE}">
+				<div class="col-md-6"
+					{% if topicrow.TOPIC_ICON_IMG and S_TOPIC_ICONS %} style="background-image: url({T_ICONS_PATH}{topicrow.TOPIC_ICON_IMG}); background-repeat: no-repeat;"{% endif %} 
+					title="{topicrow.TOPIC_FOLDER_IMG_ALT}">
 
-                    <!-- IF topicrow.S_UNREAD_TOPIC and not S_IS_BOT --><a href="{topicrow.U_NEWEST_POST}" class="icon-link"></a><!-- ENDIF -->
-                    <div class="list-inner">
-                        <!-- EVENT topiclist_row_prepend -->
-                        <!-- IF topicrow.S_UNREAD_TOPIC and not S_IS_BOT --><a href="{topicrow.U_NEWEST_POST}">{NEWEST_POST_IMG}</a> <!-- ENDIF --><a href="{topicrow.U_VIEW_TOPIC}" class="topictitle">{topicrow.TOPIC_TITLE}</a>
-                        <!-- IF topicrow.S_TOPIC_UNAPPROVED or topicrow.S_POSTS_UNAPPROVED --><a href="{topicrow.U_MCP_QUEUE}">{topicrow.UNAPPROVED_IMG}</a> <!-- ENDIF -->
-                        <!-- IF topicrow.S_TOPIC_DELETED --><a href="{topicrow.U_MCP_QUEUE}">{DELETED_IMG}</a> <!-- ENDIF -->
-                        <!-- IF topicrow.S_TOPIC_REPORTED --><a href="{topicrow.U_MCP_REPORT}">{REPORTED_IMG}</a><!-- ENDIF --><br>
+					<!-- IF topicrow.S_UNREAD_TOPIC and not S_IS_BOT --><a href="{topicrow.U_NEWEST_POST}" class="icon-link"></a><!-- ENDIF -->
+					<div class="list-inner">
+						<!-- EVENT topiclist_row_prepend -->
+						<!-- IF topicrow.S_UNREAD_TOPIC and not S_IS_BOT --><a href="{topicrow.U_NEWEST_POST}">{NEWEST_POST_IMG}</a> <!-- ENDIF --><a href="{topicrow.U_VIEW_TOPIC}" class="topictitle">{topicrow.TOPIC_TITLE}</a>
+						<!-- IF topicrow.S_TOPIC_UNAPPROVED or topicrow.S_POSTS_UNAPPROVED --><a href="{topicrow.U_MCP_QUEUE}">{topicrow.UNAPPROVED_IMG}</a> <!-- ENDIF -->
+						<!-- IF topicrow.S_TOPIC_DELETED --><a href="{topicrow.U_MCP_QUEUE}">{DELETED_IMG}</a> <!-- ENDIF -->
+						<!-- IF topicrow.S_TOPIC_REPORTED --><a href="{topicrow.U_MCP_REPORT}">{REPORTED_IMG}</a><!-- ENDIF --><br>
 
-                        <span class="hidden-xs">
-                            <!-- IF topicrow.S_HAS_POLL -->{POLL_IMG} <!-- ENDIF -->
-                            <!-- IF topicrow.ATTACH_ICON_IMG -->{topicrow.ATTACH_ICON_IMG} <!-- ENDIF -->
-                            {L_POST_BY_AUTHOR} {topicrow.TOPIC_AUTHOR_FULL} &raquo; {topicrow.FIRST_POST_TIME}
-                            <!-- IF topicrow.S_POST_GLOBAL and FORUM_ID != topicrow.FORUM_ID --> &raquo; {L_IN} <a href="{topicrow.U_VIEW_FORUM}">{topicrow.FORUM_NAME}</a><!-- ENDIF -->
-                        </span>
+						<span class="hidden-xs">
+							<!-- IF topicrow.S_HAS_POLL -->{POLL_IMG} <!-- ENDIF -->
+							<!-- IF topicrow.ATTACH_ICON_IMG -->{topicrow.ATTACH_ICON_IMG} <!-- ENDIF -->
+							{L_POST_BY_AUTHOR} {topicrow.TOPIC_AUTHOR_FULL} &raquo; {topicrow.FIRST_POST_TIME}
+							<!-- IF topicrow.S_POST_GLOBAL and FORUM_ID != topicrow.FORUM_ID --> &raquo; {L_IN} <a href="{topicrow.U_VIEW_FORUM}">{topicrow.FORUM_NAME}</a><!-- ENDIF -->
+						</span>
 
-                        <!-- IF .topicrow.pagination -->
-                        <ul class="pagination pagination-sm">
-                        <!-- BEGIN pagination -->
-                            <!-- IF topicrow.pagination.S_IS_PREV -->
-                            <!-- ELSEIF topicrow.pagination.S_IS_CURRENT --><li class="active"><span>{topicrow.pagination.PAGE_NUMBER}</span></li>
-                            <!-- ELSEIF topicrow.pagination.S_IS_ELLIPSIS --><li class="ellipsis"><span>{L_ELLIPSIS}</span></li>
-                            <!-- ELSEIF topicrow.pagination.S_IS_NEXT -->
-                            <!-- ELSE --><li><a href="{topicrow.pagination.PAGE_URL}">{topicrow.pagination.PAGE_NUMBER}</a></li>
-                            <!-- ENDIF -->
-                        <!-- END pagination -->
-                        </ul>
-                        <!-- ENDIF -->
+						<!-- IF .topicrow.pagination -->
+						<ul class="pagination pagination-sm">
+						<!-- BEGIN pagination -->
+							<!-- IF topicrow.pagination.S_IS_PREV -->
+							<!-- ELSEIF topicrow.pagination.S_IS_CURRENT --><li class="active"><span>{topicrow.pagination.PAGE_NUMBER}</span></li>
+							<!-- ELSEIF topicrow.pagination.S_IS_ELLIPSIS --><li class="ellipsis"><span>{L_ELLIPSIS}</span></li>
+							<!-- ELSEIF topicrow.pagination.S_IS_NEXT -->
+							<!-- ELSE --><li><a href="{topicrow.pagination.PAGE_URL}">{topicrow.pagination.PAGE_NUMBER}</a></li>
+							<!-- ENDIF -->
+						<!-- END pagination -->
+						</ul>
+						<!-- ENDIF -->
 
-                        <!-- EVENT topiclist_row_append -->
-                    </div>
-                </div>
-                <div class="col-md-2">
-                    <div class="topics">{{ lang('REPLIES') }}{{ lang('COLON') }} {{ topicrow.REPLIES }}</div>
-                    <div class="posts">{{ lang('VIEWS') }}{{ lang('COLON') }} {{ topicrow.VIEWS }}</div>
-                </div>
-                <div class="col-md-4">
-                    <div class="lastpost">
-                        <span>
-                            {L_LAST_POST} {L_POST_BY_AUTHOR} {topicrow.LAST_POST_AUTHOR_FULL}
-                            {% if not S_IS_BOT %}<a href="{topicrow.U_LAST_POST}" title="{L_GOTO_LAST_POST}">{LAST_POST_IMG}</a> {% endif %}<br>{topicrow.LAST_POST_TIME}
-                        </span>
-                    </div>
-                </div>
-            </div>
+						<!-- EVENT topiclist_row_append -->
+					</div>
+				</div>
+				<div class="col-md-2">
+					<div class="topics">{{ lang('REPLIES') }}{{ lang('COLON') }} {{ topicrow.REPLIES }}</div>
+					<div class="posts">{{ lang('VIEWS') }}{{ lang('COLON') }} {{ topicrow.VIEWS }}</div>
+				</div>
+				<div class="col-md-4">
+					<div class="lastpost">
+						<span>
+							{L_LAST_POST} {L_POST_BY_AUTHOR} {topicrow.LAST_POST_AUTHOR_FULL}
+							{% if not S_IS_BOT %}<a href="{topicrow.U_LAST_POST}" title="{L_GOTO_LAST_POST}">{LAST_POST_IMG}</a> {% endif %}<br>{topicrow.LAST_POST_TIME}
+						</span>
+					</div>
+				</div>
+			</div>
 
 	<!-- IF topicrow.S_LAST_ROW -->
 		</div>
@@ -200,22 +200,22 @@
 
 <!-- IF .topicrow and not S_DISPLAY_ACTIVE -->
 <div class="row">
-    <div class="col-md-4">
-        <!-- IF not S_IS_BOT and S_DISPLAY_POST_INFO -->
-        <div class="btn-group">
-            <!-- EVENT viewforum_buttons_bottom_before -->
+	<div class="col-md-4">
+		<!-- IF not S_IS_BOT and S_DISPLAY_POST_INFO -->
+		<div class="btn-group">
+			<!-- EVENT viewforum_buttons_bottom_before -->
 
-            <a href="{U_POST_NEW_TOPIC}" class="btn btn-primary <!-- IF S_IS_LOCKED -->locked-icon<!-- ELSE -->post-icon<!-- ENDIF -->" title="<!-- IF S_IS_LOCKED -->{L_FORUM_LOCKED}<!-- ELSE -->{L_POST_TOPIC}<!-- ENDIF -->">
-                <!-- IF S_IS_LOCKED -->{L_BUTTON_FORUM_LOCKED}<!-- ELSE -->{L_BUTTON_NEW_TOPIC}<!-- ENDIF -->
-            </a>
+			<a href="{U_POST_NEW_TOPIC}" class="btn btn-primary <!-- IF S_IS_LOCKED -->locked-icon<!-- ELSE -->post-icon<!-- ENDIF -->" title="<!-- IF S_IS_LOCKED -->{L_FORUM_LOCKED}<!-- ELSE -->{L_POST_TOPIC}<!-- ENDIF -->">
+				<!-- IF S_IS_LOCKED -->{L_BUTTON_FORUM_LOCKED}<!-- ELSE -->{L_BUTTON_NEW_TOPIC}<!-- ENDIF -->
+			</a>
 
-            <!-- EVENT viewforum_buttons_bottom_after -->
-        </div>
-        <!-- ENDIF -->
-    </div>
-    <div class="col-md-8 text-right">
-        {% include "includes/pagination_forum.html" %}
-    </div>
+			<!-- EVENT viewforum_buttons_bottom_after -->
+		</div>
+		<!-- ENDIF -->
+	</div>
+	<div class="col-md-8 text-right">
+		{% include "includes/pagination_forum.html" %}
+	</div>
 </div>
 <!-- ENDIF -->
 
@@ -231,7 +231,7 @@
 {% if S_DISPLAY_POST_INFO %}
 	<div class="panel panel-info permissions">
 		<div class="panel-heading">{L_FORUM_PERMISSIONS}</div>
-        <div class="panel-body">{% for rules in loops.rules %}{rules.RULE}<br>{% endfor %}</div>
+		<div class="panel-body">{% for rules in loops.rules %}{rules.RULE}<br>{% endfor %}</div>
 	</div>
 {% endif %}
 {% endblock %}

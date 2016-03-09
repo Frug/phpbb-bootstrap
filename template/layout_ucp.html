@@ -1,7 +1,7 @@
 {% extends "layout_main.html" %}
 
 {% block content %}
-<h2 class="ucp-title">{L_UCP}</h2>
+<h2 class="ucp-title">{{ lang('UCP') }}</h2>
 
 <ul class="nav nav-tabs">
 	<!-- BEGIN t_block1 -->
@@ -23,19 +23,19 @@
 			<!-- BEGIN t_block2 -->
 				<!-- IF S_PRIVMSGS and not t_block2.S_LAST_ROW -->
 				<ul class="nav nav-pills nav-stacked">
-					<!-- IF t_block2.S_SELECTED -->
+					{% if t_block2.S_SELECTED %}
 						<li id="active-subsection" class="active"><a href="{t_block2.U_TITLE}"><span>{t_block2.L_TITLE}</span></a></li>
-					<!-- ELSE -->
+					{% else %}
 						<li><a href="{t_block2.U_TITLE}"><span>{t_block2.L_TITLE}</span></a></li>
-					<!-- ENDIF -->
+					{% endif %}
 				</ul>
 				<!-- ENDIF -->
 			<!-- END t_block2 -->
-			<hr />
+			<hr>
 			<!-- BEGIN folder -->
 				{% if folder.S_FIRST_ROW %}<ul class="nav nav-pills nav-stacked">{% endif %}
 				{% if folder.S_CUR_FOLDER %}
-					<li id="active-subsection">
+					<li id="active-subsection" class="active">
 						<a href="{folder.U_FOLDER}">{% if folder.UNREAD_MESSAGES > 0 %}<strong>{folder.FOLDER_NAME} ({folder.UNREAD_MESSAGES})</strong>{% else %}{folder.FOLDER_NAME}{% endif %}</a>
 					</li>
 				{% else %}
@@ -50,11 +50,11 @@
 			<ul class="nav nav-pills nav-stacked">
 			<!-- BEGIN t_block2 -->
 				<!-- IF (S_PRIVMSGS and t_block2.S_LAST_ROW) or not S_PRIVMSGS -->
-					<!-- IF t_block2.S_SELECTED -->
+					{% if t_block2.S_SELECTED %}
 						<li id="active-subsection" class="active"><a href="{t_block2.U_TITLE}"><span>{t_block2.L_TITLE}</span></a></li>
-					<!-- ELSE -->
+					{% else %}
 						<li><a href="{t_block2.U_TITLE}"><span>{t_block2.L_TITLE}</span></a></li>
-					<!-- ENDIF -->
+					{% endif %}
 				<!-- ENDIF -->
 			<!-- END t_block2 -->
 			</ul>
@@ -62,17 +62,17 @@
 
 		<!-- IF .friends_online or .friends_offline -->
 		<dl class="legend">
-			<dt>{L_FRIENDS}</dt>
+			<dt>{{ lang('FRIENDS') }}</dt>
 			<!-- BEGIN friends_online -->
-				<dd class="friend-online" title="{L_FRIENDS_ONLINE}">
-					{friends_online.USERNAME_FULL} {% if S_SHOW_PM_BOX %}<input type="submit" name="add_to[{friends_online.USER_ID}]" value="{L_ADD}" class="btn btn-default" />{% endif %}
+				<dd class="friend-online" title="{{ lang('FRIENDS_ONLINE') }}">
+					{friends_online.USERNAME_FULL} {% if S_SHOW_PM_BOX %}<input type="submit" name="add_to[{friends_online.USER_ID}]" value="{{ lang('ADD') }}" class="btn btn-default" />{% endif %}
 					<!-- IF friends_online.S_LAST_ROW and .friends_offline --><hr /><!-- ENDIF -->
 				</dd>
 			<!-- END friends_online -->
 
 			<!-- BEGIN friends_offline -->
-				<dd class="friend-offline" title="{L_FRIENDS_OFFLINE}">
-					{friends_offline.USERNAME_FULL} {% if S_SHOW_PM_BOX %}<input type="submit" name="add_to[{friends_offline.USER_ID}]" value="{L_ADD}" class="btn btn-default" />{% endif %}
+				<dd class="friend-offline" title="{{ lang('FRIENDS_OFFLINE') }}">
+					{friends_offline.USERNAME_FULL} {% if S_SHOW_PM_BOX %}<input type="submit" name="add_to[{friends_offline.USER_ID}]" value="{{ lang('ADD') }}" class="btn btn-default" />{% endif %}
 				</dd>
 			<!-- END friends_offline -->
 		</dl>
@@ -80,7 +80,7 @@
 
 		<!-- IF S_SHOW_COLOUR_LEGEND -->
 		<dl class="legend">
-			<dt>{L_MESSAGE_COLOURS}</dt>
+			<dt>{{ lang('MESSAGE_COLOURS') }}</dt>
 			<!-- BEGIN pm_colour_info -->
 				<dd class="pm-legend{% if pm_colour_info.CLASS %} {pm_colour_info.CLASS}{% endif %}">{% if pm_colour_info.IMG %}{pm_colour_info.IMG} {% endif %}{pm_colour_info.LANG}</dd>
 			<!-- END pm_colour_info -->
@@ -91,12 +91,9 @@
 
 	<div id="cp-main" class="col-sm-9">
 		<div class="panel panel-default">
-            
-            {% block inner_content %}
-            
-            {% endblock %}
-            
-        </div>
+			{% block inner_content %}
+			{% endblock %}
+		</div>
 	</div>
 	</div><!-- end .row -->
 </div><!-- end .ucp-container -->
