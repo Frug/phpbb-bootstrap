@@ -10,21 +10,21 @@
 </ul>
 
 {% if S_COMPOSE_PM %}
-<form id="postform" method="post" action="{S_POST_ACTION}" {S_FORM_ENCTYPE}>
+<form id="postform" method="post" action="{{ S_POST_ACTION }}" {{ S_FORM_ENCTYPE }}>
 {% endif %}
 
 <div class="tab-content ucp-container">
 	<div class="row">
 
-	<div id="cp-menu" class="col-sm-3">
+	<div id="cp-menu" class="col-sm-2 p-r-0">
 
-		<div id="navigation" role="navigation">
+		<div id="navigation" role="navigation" class="small">
 			{% if S_PRIVMSGS %}
 			<!-- BEGIN t_block2 -->
 				<!-- IF S_PRIVMSGS and not t_block2.S_LAST_ROW -->
 				<ul class="nav nav-pills nav-stacked">
 					{% if t_block2.S_SELECTED %}
-						<li id="active-subsection" class="active"><a href="{t_block2.U_TITLE}"><span>{t_block2.L_TITLE}</span></a></li>
+						<li id="active-subsection" class="active"><a href="{{ t_block2.U_TITLE }}"><span>{t_block2.L_TITLE}</span></a></li>
 					{% else %}
 						<li><a href="{t_block2.U_TITLE}"><span>{t_block2.L_TITLE}</span></a></li>
 					{% endif %}
@@ -89,7 +89,7 @@
 
 	</div>
 
-	<div id="cp-main" class="col-sm-9">
+	<div id="cp-main" class="col-sm-10">
 		<div class="panel panel-default">
 			{% block inner_content %}
 			{% endblock %}

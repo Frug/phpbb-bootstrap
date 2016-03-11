@@ -1,63 +1,65 @@
 <div class="panel-heading">
-	<h2 class="panel-title">{L_TITLE}{% if CUR_FOLDER_NAME %}{{ lang('COLON') }} {CUR_FOLDER_NAME}{% endif %}</h2>
+	<h2 class="panel-title">{{ lang('TITLE') }}{% if CUR_FOLDER_NAME %}{{ lang('COLON') }} {CUR_FOLDER_NAME}{% endif %}</h2>
 </div>
 
 <div class="panel-body">
-<form id="viewfolder" method="post" action="{S_PM_ACTION}">
+	<form id="viewfolder" method="post" action="{{ S_PM_ACTION }}">
 
-	<!-- IF FOLDER_STATUS and FOLDER_MAX_MESSAGES neq 0 --><p>{FOLDER_STATUS}</p><!-- ENDIF -->
+	{% if FOLDER_STATUS and FOLDER_MAX_MESSAGES neq 0 %}<p>{FOLDER_STATUS}</p>{% endif %}
 
 	<div class="row" id="pm-actions">
 		
 		<div class="col-sm-6">
-		<!-- IF U_POST_REPLY_PM or U_POST_NEW_TOPIC or U_FORWARD_PM -->
+		{% if U_POST_REPLY_PM or U_POST_NEW_TOPIC or U_FORWARD_PM %}
 			<div class="buttons">
-				<!-- IF U_POST_REPLY_PM -->
-					<a title="{L_POST_REPLY_PM}" href="{U_POST_REPLY_PM}" class="btn btn-default icon-button pmreply-icon">
-						{L_BUTTON_PM_REPLY}
+				{% if U_POST_REPLY_PM %}
+					<a title="{{ lang('POST_REPLY_PM') }}" href="{U_POST_REPLY_PM}" class="btn btn-default icon-button pmreply-icon">
+						{{ lang('BUTTON_PM_REPLY') }}
 					</a>
-				<!-- ELSEIF U_POST_NEW_TOPIC -->
-					<a href="{U_POST_NEW_TOPIC}" accesskey="n" title="{L_UCP_PM_COMPOSE}" class="btn btn-default icon-button newpm-icon">
-						{L_BUTTON_PM_NEW}
+				{% elseif U_POST_NEW_TOPIC %}
+					<a href="{U_POST_NEW_TOPIC}" accesskey="n" title="{{ lang('UCP_PM_COMPOSE') }}" class="btn btn-default icon-button newpm-icon">
+						{{ lang('BUTTON_PM_NEW') }}
 					</a>
-				<!-- ENDIF -->
-				<!-- IF U_FORWARD_PM -->
-					<a title="{L_POST_FORWARD_PM}" href="{U_FORWARD_PM}" class="btn btn-default icon-button forwardpm-icon">
-						{L_BUTTON_PM_FORWARD}
+				{% endif %}
+				{% if U_FORWARD_PM %}
+					<a title="{{ lang('POST_FORWARD_PM') }}" href="{U_FORWARD_PM}" class="btn btn-default icon-button forwardpm-icon">
+						{{ lang('BUTTON_PM_FORWARD') }}
 					</a>
-				<!-- ENDIF -->
-				<!-- IF U_POST_REPLY_PM and S_PM_RECIPIENTS gt 1 -->
-					<a title="{L_REPLY_TO_ALL}" href="{U_POST_REPLY_ALL}" class="btn btn-default icon-button reply-all">
-						{L_BUTTON_PM_REPLY_ALL}
+				{% endif %}
+				{% if U_POST_REPLY_PM and S_PM_RECIPIENTS gt 1 %}
+					<a title="{{ lang('REPLY_TO_ALL') }}" href="{U_POST_REPLY_ALL}" class="btn btn-default icon-button reply-all">
+						{{ lang('BUTTON_PM_REPLY_ALL') }}
 					</a>
-				<!-- ENDIF -->
+				{% endif %}
 			</div>
-		<!-- ENDIF -->
-		<!-- IF not S_IS_BOT and U_PRINT_PM -->
+		{% endif %}
+		{% if not S_IS_BOT and U_PRINT_PM %}
 			<div class="dropdown-container dropdown-button-control topic-tools">
-				<span title="{L_PM_TOOLS}" class="dropdown-trigger dropdown-select button icon-button tools-icon"></span>
+				<span title="{{ lang('PM_TOOLS') }}" class="dropdown-trigger dropdown-select button icon-button tools-icon"></span>
 				<div class="dropdown hidden">
 					<ul class="dropdown-contents">
-						{% if U_PRINT_PM %}<li class="small-icon icon-print"><a href="{U_PRINT_PM}" title="{L_PRINT_PM}" accesskey="p">{L_PRINT_PM}</a></li>{% endif %}
+						{% if U_PRINT_PM %}
+							<li class="small-icon icon-print"><a href="{U_PRINT_PM}" title="{{ lang('PRINT_PM') }}" accesskey="p">{{ lang('PRINT_PM') }}</a></li>
+						{% endif %}
 					</ul>
 				</div>
 			</div>
-		<!-- ENDIF -->
+		{% endif %}
 		</div>
 
-	<!-- IF TOTAL_MESSAGES or S_VIEW_MESSAGE -->
+	{% if TOTAL_MESSAGES or S_VIEW_MESSAGE %}
 		<div class="col-md-6 text-right">
-			<!-- IF S_VIEW_MESSAGE -->
-				<a class="arrow-{S_CONTENT_FLOW_BEGIN}" href="{U_CURRENT_FOLDER}">{L_RETURN_TO_FOLDER}</a>
-			<!-- ELSEIF FOLDER_CUR_MESSAGES neq 0 -->
-				{% if U_MARK_ALL %}<a href="{U_MARK_ALL}">{L_PM_MARK_ALL_READ}</a> &bull; {% endif %}
-				{TOTAL_MESSAGES}
-				<!-- IF .pagination -->
-					<!-- INCLUDE includes/pagination.html -->
-				<!-- ELSE -->
-					 &bull; {PAGE_NUMBER}
-				<!-- ENDIF -->
-			<!-- ENDIF -->
+			{% if S_VIEW_MESSAGE %}
+				<a class="btn btn-default arrow-{S_CONTENT_FLOW_BEGIN}" href="{U_CURRENT_FOLDER}">{{ lang('RETURN_TO_FOLDER') }}</a>
+			{% elseif FOLDER_CUR_MESSAGES neq 0 %}
+				{% if U_MARK_ALL %}<a href="{U_MARK_ALL}">{{ lang('PM_MARK_ALL_READ') }}</a> &bull; {% endif %}
+				{{ TOTAL_MESSAGES }}
+				{% if loops.pagination is not empty %}
+					{% include "includes/pagination.html" %}
+				{% else %}
+					&bull; {{ PAGE_NUMBER }}
+				{% endif %}
+			{% endif %}
 		</div>
-	<!-- ENDIF -->
+	{% endif %}
 	</div>

@@ -3,35 +3,31 @@
 {% block inner_content %}
 {% include 'ucp_pm_message_header.html' %}
 
-<!-- IF S_DISPLAY_HISTORY and (U_VIEW_PREVIOUS_HISTORY or U_VIEW_NEXT_HISTORY) -->
-	<fieldset class="display-options clearfix">
-		<!-- IF U_VIEW_PREVIOUS_HISTORY --><a href="{U_VIEW_PREVIOUS_HISTORY}" class="left-box arrow-{S_CONTENT_FLOW_BEGIN}">{L_VIEW_PREVIOUS_HISTORY}</a><!-- ENDIF -->
-		<!-- IF U_VIEW_NEXT_HISTORY --><a href="{U_VIEW_NEXT_HISTORY}" class="right-box arrow-{S_CONTENT_FLOW_END}">{L_VIEW_NEXT_HISTORY}</a><!-- ENDIF -->
-	</fieldset>
-<!-- ENDIF -->
+<div id="post-{MESSAGE_ID}" class="row post pm has-profile{% if S_POST_UNAPPROVED or S_POST_REPORTED %} reported{% endif %}{% if S_ONLINE %} online{% endif %}">
 
-<div id="post-{MESSAGE_ID}" class="post pm has-profile<!-- IF S_POST_UNAPPROVED or S_POST_REPORTED --> reported<!-- ENDIF --><!-- IF S_ONLINE --> online<!-- ENDIF -->">
-<div class="inner">
-
-	<dl class="postprofile" id="profile{MESSAGE_ID}">
-		<dt class="<!-- IF RANK_TITLE or RANK_IMG -->has-profile-rank<!-- ELSE -->no-profile-rank<!-- ENDIF --> <!-- IF AUTHOR_AVATAR -->has-avatar<!-- ELSE -->no-avatar<!-- ENDIF -->">
+	<aside class="col-md-3 postprofile" id="profile{MESSAGE_ID}">
+		<div class="{% if RANK_TITLE or RANK_IMG %}has-profile-rank{% else %}no-profile-rank{% endif %} {% if AUTHOR_AVATAR %}has-avatar{% else %}no-avatar{% endif %}">
 			<div class="avatar-container">
 				<!-- EVENT ucp_pm_viewmessage_avatar_before -->
-				<!-- IF AUTHOR_AVATAR --><a href="{U_MESSAGE_AUTHOR}" class="avatar">{AUTHOR_AVATAR}</a><!-- ENDIF -->
+				{% if AUTHOR_AVATAR %}<a href="{U_MESSAGE_AUTHOR}" class="avatar">{AUTHOR_AVATAR}</a>{% endif %}
 				<!-- EVENT ucp_pm_viewmessage_avatar_after -->
 			</div>
 			{MESSAGE_AUTHOR_FULL}
-		</dt>
+		</div>
 
-		<!-- IF RANK_TITLE or RANK_IMG --><dd class="profile-rank">{RANK_TITLE}<!-- IF RANK_TITLE and RANK_IMG --><br /><!-- ENDIF -->{RANK_IMG}</dd><!-- ENDIF -->
+		{% if RANK_TITLE or RANK_IMG %}<dd class="profile-rank">{RANK_TITLE}{% if RANK_TITLE and RANK_IMG %}<br>{% endif %}{RANK_IMG}</dd>{% endif %}
 
-		<dd class="profile-posts"><strong>{L_POSTS}{L_COLON}</strong> <!-- IF U_AUTHOR_POSTS != '' --><a href="{U_AUTHOR_POSTS}">{AUTHOR_POSTS}</a><!-- ELSE -->{AUTHOR_POSTS}<!-- ENDIF --></dd>
-		<!-- IF AUTHOR_JOINED --><dd class="profile-joined"><strong>{L_JOINED}{L_COLON}</strong> {AUTHOR_JOINED}</dd><!-- ENDIF -->
+		<div class="profile-posts">
+			<strong>{{ lang('POSTS') }}{{ lang('COLON') }}</strong> {% if U_AUTHOR_POSTS != '' %}<a href="{U_AUTHOR_POSTS}">{AUTHOR_POSTS}</a>{% else %}{AUTHOR_POSTS}{% endif %}
+		</div>
+		{% if AUTHOR_JOINED %}<dd class="profile-joined"><strong>{{ lang('JOINED') }}{{ lang('COLON') }}</strong> {AUTHOR_JOINED}</dd>{% endif %}
 
 		<!-- EVENT ucp_pm_viewmessage_custom_fields_before -->
 		<!-- BEGIN custom_fields -->
 			<!-- IF not custom_fields.S_PROFILE_CONTACT -->
-				<dd class="profile-custom-field profile-{custom_fields.PROFILE_FIELD_IDENT}"><strong>{custom_fields.PROFILE_FIELD_NAME}{L_COLON}</strong> {custom_fields.PROFILE_FIELD_VALUE}</dd>
+				<div class="profile-custom-field profile-{custom_fields.PROFILE_FIELD_IDENT}">
+					<strong>{custom_fields.PROFILE_FIELD_NAME}{{ lang('COLON') }}</strong> {custom_fields.PROFILE_FIELD_VALUE}
+				</div>
 			<!-- ENDIF -->
 		<!-- END custom_fields -->
 		<!-- EVENT ucp_pm_viewmessage_custom_fields_after -->
@@ -39,7 +35,7 @@
 		<!-- EVENT ucp_pm_viewmessage_contact_fields_before -->
 		<!-- IF .contact -->
 			<dd class="profile-contact">
-				<strong>{L_CONTACT}{L_COLON}</strong>
+				<strong>{{ lang('CONTACT') }}{{ lang('COLON') }}</strong>
 				<div class="dropdown-container dropdown-left">
 					<a href="#" class="dropdown-trigger"><span class="imageset icon_contact" title="{CONTACT_USER}">{CONTACT_USER}</span></a>
 					<div class="dropdown hidden">
@@ -64,95 +60,114 @@
 			</dd>
 		<!-- ENDIF -->
 		<!-- EVENT ucp_pm_viewmessage_contact_fields_after -->
-	</dl>
+	</aside>
 
-	<div class="postbody">
-		<h3 class="first">{SUBJECT}</h3>
+	<div class="col-md-9 postbody">
+		<h3 class="first m-t-0">{SUBJECT}</h3>
 
 		<!-- IF U_DELETE or U_EDIT or U_QUOTE or U_REPORT -->
-		<ul class="post-buttons">
+		<div class="btn-group btn-group-sm pull-right">
 			<!-- EVENT ucp_pm_viewmessage_post_buttons_before -->
-			<!-- IF U_EDIT -->
-				<li>
-					<a href="{U_EDIT}" title="{L_POST_EDIT_PM}" class="button icon-button edit-icon"><span>{L_POST_EDIT_PM}</span></a>
-				</li>
-			<!-- ENDIF -->
-			<!-- IF U_DELETE -->
-				<li>
-					<a href="{U_DELETE}" title="{L_DELETE_MESSAGE}" class="button icon-button delete-icon"><span>{L_DELETE_MESSAGE}</span></a>
-				</li>
-			<!-- ENDIF -->
-			<!-- IF U_REPORT -->
-				<li>
-					<a href="{U_REPORT}" title="{L_REPORT_PM}" class="button icon-button report-icon"><span>{L_REPORT_PM}</span></a>
-				</li>
-			<!-- ENDIF -->
-			<!-- IF U_QUOTE -->
-				<li>
-					<a href="{U_QUOTE}" title="{L_POST_QUOTE_PM}" class="button icon-button quote-icon"><span>{L_POST_QUOTE_PM}</span></a>
-				</li>
-			<!-- ENDIF -->
+			{% if U_EDIT %}
+				<a href="{U_EDIT}" title="{{ lang('POST_EDIT_PM') }}" class="btn btn-default edit-icon"><span>{{ lang('POST_EDIT_PM') }}</span></a>
+			{% endif %}
+			{% if U_DELETE %}
+				<a href="{U_DELETE}" title="{{ lang('DELETE_MESSAGE') }}" class="btn btn-danger delete-icon"><span>{{ lang('DELETE_MESSAGE') }}</span></a>
+			{% endif %}
+			{% if U_REPORT %}
+				<a href="{U_REPORT}" title="{{ lang('REPORT_PM') }}" class="btn btn-default report-icon"><span>{{ lang('REPORT_PM') }}</span></a>
+			{% endif %}
+			{% if U_QUOTE %}
+				<a href="{U_QUOTE}" title="{{ lang('POST_QUOTE_PM') }}" class="btn btn-default quote-icon"><span>{{ lang('POST_QUOTE_PM') }}</span></a>
+			{% endif %}
 			<!-- EVENT ucp_pm_viewmessage_post_buttons_after -->
-		</ul>
+		</div>
 		<!-- ENDIF -->
 
 		<p class="author">
-			<strong>{L_SENT_AT}{L_COLON}</strong> {SENT_DATE}
-			<br /><strong>{L_PM_FROM}{L_COLON}</strong> {MESSAGE_AUTHOR_FULL}
-			<!-- IF S_TO_RECIPIENT --><br /><strong>{L_TO}{L_COLON}</strong> <!-- BEGIN to_recipient --><!-- IF to_recipient.NAME_FULL -->{to_recipient.NAME_FULL}<!-- ELSE --><a href="{to_recipient.U_VIEW}" style="color:<!-- IF to_recipient.COLOUR -->{to_recipient.COLOUR}<!-- ELSEIF to_recipient.IS_GROUP -->#0000FF<!-- ENDIF -->;">{to_recipient.NAME}</a><!-- ENDIF -->&nbsp;<!-- END to_recipient --><!-- ENDIF -->
-			<!-- IF S_BCC_RECIPIENT --><br /><strong>{L_BCC}{L_COLON}</strong> <!-- BEGIN bcc_recipient --><!-- IF bcc_recipient.NAME_FULL -->{bcc_recipient.NAME_FULL}<!-- ELSE --><a href="{bcc_recipient.U_VIEW}" style="color:<!-- IF bcc_recipient.COLOUR -->{bcc_recipient.COLOUR}<!-- ELSEIF bcc_recipient.IS_GROUP -->#0000FF<!-- ENDIF -->;">{bcc_recipient.NAME}</a><!-- ENDIF -->&nbsp;<!-- END bcc_recipient --><!-- ENDIF -->
+			<strong>{{ lang('SENT_AT') }}{{ lang('COLON') }}</strong> {SENT_DATE}
+			<br><strong>{{ lang('PM_FROM') }}{{ lang('COLON') }}</strong> {MESSAGE_AUTHOR_FULL}
+			{% if S_TO_RECIPIENT %}
+				<br>
+				<strong>{{ lang('TO') }}{{ lang('COLON') }}</strong>
+				<!-- BEGIN to_recipient -->
+					{% if to_recipient.NAME_FULL %}
+						{to_recipient.NAME_FULL}
+					{% else %}
+						<a href="{to_recipient.U_VIEW}" style="color:{% if to_recipient.COLOUR %}{to_recipient.COLOUR}{% elseif to_recipient.IS_GROUP %}#0000FF{% endif %};">{to_recipient.NAME}</a>
+					{% endif %}
+				<!-- END to_recipient -->
+			{% endif %}
+			{% if S_BCC_RECIPIENT %}
+				<br>
+				<strong>{{ lang('BCC') }}{{ lang('COLON') }}</strong>
+				<!-- BEGIN bcc_recipient -->
+					<!-- IF bcc_recipient.NAME_FULL -->{bcc_recipient.NAME_FULL}<!-- ELSE --><a href="{bcc_recipient.U_VIEW}" style="color:<!-- IF bcc_recipient.COLOUR -->{bcc_recipient.COLOUR}<!-- ELSEIF bcc_recipient.IS_GROUP -->#0000FF<!-- ENDIF -->;">{bcc_recipient.NAME}</a><!-- ENDIF -->&nbsp;
+				<!-- END bcc_recipient -->
+			{% endif %}
 		</p>
 
 
 		<div class="content">{MESSAGE}</div>
 
-		<!-- IF S_HAS_ATTACHMENTS -->
+		{% if S_HAS_ATTACHMENTS %}
 			<dl class="attachbox">
 				<dt>
-					{L_ATTACHMENTS}
+					{{ lang('ATTACHMENTS') }}
 				</dt>
 				<!-- BEGIN attachment -->
 					<dd>{attachment.DISPLAY_ATTACHMENT}</dd>
 				<!-- END attachment -->
 			</dl>
-		<!-- ENDIF -->
+		{% endif %}
 
-		<!-- IF S_DISPLAY_NOTICE -->
-			<div class="post-notice error">{L_DOWNLOAD_NOTICE}</div>
-		<!-- ENDIF -->
+		{% if S_DISPLAY_NOTICE %}
+			<div class="post-notice error">{{ lang('DOWNLOAD_NOTICE') }}</div>
+		{% endif %}
 
-		<!-- IF EDITED_MESSAGE or EDIT_REASON -->
+		{% if EDITED_MESSAGE or EDIT_REASON %}
 		<div class="notice">{EDITED_MESSAGE}
-			<!-- IF EDIT_REASON --><br /><strong>{L_REASON}{L_COLON}</strong> <em>{EDIT_REASON}</em><!-- ENDIF -->
+            <!-- IF EDIT_REASON --><br><strong>{{ lang('REASON') }}{{ lang('COLON') }}</strong> <em>{{ EDIT_REASON }}</em><!-- ENDIF -->
 		</div>
-		<!-- ENDIF -->
+		{% endif %}
 
-		<!-- IF SIGNATURE -->
+		{% if SIGNATURE %}
 			<div id="sig{MESSAGE_ID}" class="signature">{SIGNATURE}</div>
-		<!-- ENDIF -->
+		{% endif %}
 	</div>
 
-	<div class="back2top"><a href="#top" class="top" title="{L_BACK_TO_TOP}">{L_BACK_TO_TOP}</a></div>
-
-	</div>
 </div>
 
-<!-- IF S_VIEW_MESSAGE -->
-<fieldset class="display-options">
-	<!-- IF U_PREVIOUS_PM --><a href="{U_PREVIOUS_PM}" class="left-box arrow-{S_CONTENT_FLOW_BEGIN}">{L_VIEW_PREVIOUS_PM}</a><!-- ENDIF -->
-	<!-- IF U_NEXT_PM --><a href="{U_NEXT_PM}" class="right-box arrow-{S_CONTENT_FLOW_END}">{L_VIEW_NEXT_PM}</a><!-- ENDIF -->
+<hr>
 
-	<!-- IF S_MARK_OPTIONS --><label for="mark_option"><select name="mark_option" id="mark_option">{S_MARK_OPTIONS}</select></label>&nbsp;<input class="button2" type="submit" name="submit_mark" value="{L_GO}" /><!-- ENDIF -->
-	<!-- IF not S_UNREAD and not S_SPECIAL_FOLDER --><label for="dest_folder"><!-- IF S_VIEW_MESSAGE -->{L_MOVE_TO_FOLDER}{L_COLON} <!-- ELSE -->{L_MOVE_MARKED_TO_FOLDER}<!-- ENDIF --> <select name="dest_folder" id="dest_folder">{S_TO_FOLDER_OPTIONS}</select></label> <input class="button2" type="submit" name="move_pm" value="{L_GO}" /><!-- ENDIF -->
-	<input type="hidden" name="marked_msg_id[]" value="{MSG_ID}" />
-	<input type="hidden" name="cur_folder_id" value="{CUR_FOLDER_ID}" />
-	<input type="hidden" name="p" value="{MSG_ID}" />
+{% if S_VIEW_MESSAGE %}
+<fieldset class="display-options form-inline row">
+	<div class="col-md-2 text-left">
+		{% if U_PREVIOUS_PM %}<a href="{U_PREVIOUS_PM}" class="btn btn-default arrow-{S_CONTENT_FLOW_BEGIN}">{{ lang('VIEW_PREVIOUS_PM') }}</a>{% endif %}
+	</div>
+	<div class="col-md-8 text-center">
+		{% if S_MARK_OPTIONS %}
+			<label for="mark_option"><select name="mark_option" id="mark_option">{S_MARK_OPTIONS}</select></label>&nbsp;
+			<input class="btn btn-success" type="submit" name="submit_mark" value="{{ lang('GO') }}" />
+		{% endif %}
+		{% if not S_UNREAD and not S_SPECIAL_FOLDER %}
+			<label for="dest_folder">{% if S_VIEW_MESSAGE %}{{ lang('MOVE_TO_FOLDER') }}{{ lang('COLON') }} {% else %}{{ lang('MOVE_MARKED_TO_FOLDER') }}{% endif %}
+			<select name="dest_folder" id="dest_folder">{S_TO_FOLDER_OPTIONS}</select></label>
+			<input class="btn btn-success" type="submit" name="move_pm" value="{{ lang('GO') }}">
+		{% endif %}
+	</div>
+	<div class="col-md-2 text-right">
+		{% if U_NEXT_PM %}<a href="{U_NEXT_PM}" class="btn btn-default arrow-{S_CONTENT_FLOW_END}">{{ lang('VIEW_NEXT_PM') }}</a>{% endif %}
+	</div>
+	<input type="hidden" name="marked_msg_id[]" value="{{ MSG_ID }}">
+	<input type="hidden" name="cur_folder_id" value="{{ CUR_FOLDER_ID }}">
+	<input type="hidden" name="p" value="{{ MSG_ID }}">
 </fieldset>
-<!-- ENDIF -->
+{% endif %}
 
-<!-- INCLUDE ucp_pm_message_footer.html -->
+{% include "ucp_pm_message_footer.html" %}
 
 </div>
 
-<!-- IF S_DISPLAY_HISTORY --><!-- INCLUDE ucp_pm_history.html --><!-- ENDIF -->
+{% if S_DISPLAY_HISTORY %}{% include "ucp_pm_history.html" %}{% endif %}
 {% endblock %}
