@@ -1,30 +1,30 @@
+<script>
+// <![CDATA[
+	bbcodeEnabled = {{ S_BBCODE_ALLOWED }};
+// ]]>
+</script>
 
-<div id="review" class="row">
-	<div class="col-md-6">
-		<h3>{{ lang('MESSAGE_HISTORY') }}{{ lang('COLON') }}</h3>
+<div class="panel panel-default">
+	<div class="panel-heading">
+		<div id="review" class="row">
+			<div class="col-md-6">
+				{{ lang('MESSAGE_HISTORY') }}{{ lang('COLON') }}
+			</div>
+			<div class="col-md-6 text-right">
+				<a href="#review" onclick="viewableArea(getElementById('topicreview'), true); var rev_text = getElementById('review').getElementsByTagName('a').item(0).firstChild; if (rev_text.data == '{LA_EXPAND_VIEW}'){rev_text.data = '{LA_COLLAPSE_VIEW}'; } else if (rev_text.data == '{LA_COLLAPSE_VIEW}'){rev_text.data = '{LA_EXPAND_VIEW}'};">{{ lang('EXPAND_VIEW') }}</a>
+			</div>
+		</div>
+			
 	</div>
-	<div class="col-md-6 text-right">
-		<a href="#review" onclick="viewableArea(getElementById('topicreview'), true); var rev_text = getElementById('review').getElementsByTagName('a').item(0).firstChild; if (rev_text.data == '{LA_EXPAND_VIEW}'){rev_text.data = '{LA_COLLAPSE_VIEW}'; } else if (rev_text.data == '{LA_COLLAPSE_VIEW}'){rev_text.data = '{LA_EXPAND_VIEW}'};">{{ lang('EXPAND_VIEW') }}</a>
-	</div>
-</div>
-
-<div id="topicreview" class="panel panel-default">
-	<script>
-	// <![CDATA[
-		bbcodeEnabled = {{ S_BBCODE_ALLOWED }};
-	// ]]>
-	</script>
+	<div class="panel-body" id="topicreview">
 	<!-- BEGIN history_row -->
-	<div class="post panel">
-		<div class="panel-body">
-
 		<div class="postbody" id="pr{history_row.MSG_ID}">
-			<h3><a href="{history_row.U_VIEW_MESSAGE}" {% if history_row.S_CURRENT_MSG %}class="current"{% endif %}>{history_row.SUBJECT}</a></h3>
+			<h3 class="first"><a href="{history_row.U_VIEW_MESSAGE}" {% if history_row.S_CURRENT_MSG %}class="current"{% endif %}>{history_row.SUBJECT}</a></h3>
 
 			{% if history_row.U_QUOTE or history_row.MESSAGE_AUTHOR_QUOTE %}
 			<div class="btn-group btn-group-sm pull-right">
 				<a {% if history_row.U_QUOTE %}href="{history_row.U_QUOTE}"{% else %}href="#postingbox" onclick="addquote({history_row.MSG_ID}, '{history_row.MESSAGE_AUTHOR_QUOTE}', '{LA_WROTE}');"{% endif %} title="{{ lang('QUOTE') }} {history_row.MESSAGE_AUTHOR}" class="btn btn-default btn-sm quote-icon">
-					<span>{{ lang('QUOTE') }} {history_row.MESSAGE_AUTHOR}</span>
+					<span>{{ lang('QUOTE') }} {{ history_row.MESSAGE_AUTHOR }}</span>
 				</a>
 			</div>
 			{% endif %}
@@ -34,11 +34,10 @@
 			<div class="content">{% if history_row.MESSAGE %}{history_row.MESSAGE}{% else %}<span class="error">{{ lang('MESSAGE_REMOVED_FROM_OUTBOX') }}</span>{% endif %}</div>
 			<div id="message_{history_row.MSG_ID}" style="display: none;">{history_row.DECODED_MESSAGE}</div>
 		</div>
-
-		</div>
-	</div>
+		<hr>
 	<!-- END history_row -->
+	</div>
 </div>
 
 <hr>
-<p><a href="#cp-main" class="top2">{{ lang('BACK_TO_TOP') }}</a></p>
+<p><a href="#page-body" class="top2">{{ lang('BACK_TO_TOP') }}</a></p>

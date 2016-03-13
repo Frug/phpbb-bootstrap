@@ -1,7 +1,9 @@
 {% extends "layout_ucp.html" %}
 
 {% block inner_content %}
-<div class="panel-heading"><h2 class="panel-title">{{ lang('TITLE') }}</h2></div>
+<div class="panel-heading">
+	<h2 class="panel-title">{{ lang('TITLE') }}</h2>
+</div>
 
 <div class="panel-body">
 <form id="ucp" method="post" action="{S_UCP_ACTION}"{{ S_FORM_ENCTYPE }}>
@@ -12,44 +14,44 @@
 		<dl>
 			<dt><label for="images1">{{ lang('VIEW_IMAGES') }}{{ lang('COLON') }}</label></dt>
 			<dd>
-				<label for="images1"><input type="radio" name="images" id="images1" value="1"{% if S_IMAGES %} checked="checked"{% endif %} /> {{ lang('YES') }}</label> 
-				<label for="images0"><input type="radio" name="images" id="images0" value="0"{% if not S_IMAGES %} checked="checked"{% endif %} /> {{ lang('NO') }}</label>
+				<label for="images1"><input type="radio" name="images" id="images1" value="1"{% if S_IMAGES %} checked="checked"{% endif %}> {{ lang('YES') }}</label>
+				<label for="images0"><input type="radio" name="images" id="images0" value="0"{% if not S_IMAGES %} checked="checked"{% endif %}> {{ lang('NO') }}</label>
 			</dd>
 		</dl>
 		<dl>
 			<dt><label for="flash0">{{ lang('VIEW_FLASH') }}{{ lang('COLON') }}</label></dt>
 			<dd>
-				<label for="flash1"><input type="radio" name="flash" id="flash1" value="1"{% if S_FLASH %} checked="checked"{% endif %} /> {{ lang('YES') }}</label> 
-				<label for="flash0"><input type="radio" name="flash" id="flash0" value="0"{% if not S_FLASH %} checked="checked"{% endif %} /> {{ lang('NO') }}</label>
+				<label for="flash1"><input type="radio" name="flash" id="flash1" value="1"{% if S_FLASH %} checked="checked"{% endif %}> {{ lang('YES') }}</label>
+				<label for="flash0"><input type="radio" name="flash" id="flash0" value="0"{% if not S_FLASH %} checked="checked"{% endif %}> {{ lang('NO') }}</label>
 			</dd>
 		</dl>
 		<dl>
 			<dt><label for="smilies1">{{ lang('VIEW_SMILIES') }}{{ lang('COLON') }}</label></dt>
 			<dd>
-				<label for="smilies1"><input type="radio" name="smilies" id="smilies1" value="1"{% if S_SMILIES %} checked="checked"{% endif %} /> {{ lang('YES') }}</label> 
-				<label for="smilies0"><input type="radio" name="smilies" id="smilies0" value="0"{% if not S_SMILIES %} checked="checked"{% endif %} /> {{ lang('NO') }}</label>
+				<label for="smilies1"><input type="radio" name="smilies" id="smilies1" value="1"{% if S_SMILIES %} checked="checked"{% endif %}> {{ lang('YES') }}</label>
+				<label for="smilies0"><input type="radio" name="smilies" id="smilies0" value="0"{% if not S_SMILIES %} checked="checked"{% endif %}> {{ lang('NO') }}</label>
 			</dd>
 		</dl>
 		<dl>
 			<dt><label for="sigs1">{{ lang('VIEW_SIGS') }}{{ lang('COLON') }}</label></dt>
 			<dd>
-				<label for="sigs1"><input type="radio" name="sigs" id="sigs1" value="1"{% if S_SIGS %} checked="checked"{% endif %} /> {{ lang('YES') }}</label> 
-				<label for="sigs0"><input type="radio" name="sigs" id="sigs0" value="0"{% if not S_SIGS %} checked="checked"{% endif %} /> {{ lang('NO') }}</label>
+				<label for="sigs1"><input type="radio" name="sigs" id="sigs1" value="1"{% if S_SIGS %} checked="checked"{% endif %}> {{ lang('YES') }}</label>
+				<label for="sigs0"><input type="radio" name="sigs" id="sigs0" value="0"{% if not S_SIGS %} checked="checked"{% endif %}> {{ lang('NO') }}</label>
 			</dd>
 		</dl>
 		<dl>
 			<dt><label for="avatars1">{{ lang('VIEW_AVATARS') }}{{ lang('COLON') }}</label></dt>
 			<dd>
-				<label for="avatars1"><input type="radio" name="avatars" id="avatars1" value="1"{% if S_AVATARS %} checked="checked"{% endif %} /> {{ lang('YES') }}</label> 
-				<label for="avatars0"><input type="radio" name="avatars" id="avatars0" value="0"{% if not S_AVATARS %} checked="checked"{% endif %} /> {{ lang('NO') }}</label>
+				<label for="avatars1"><input type="radio" name="avatars" id="avatars1" value="1"{% if S_AVATARS %} checked="checked"{% endif %}> {{ lang('YES') }}</label>
+				<label for="avatars0"><input type="radio" name="avatars" id="avatars0" value="0"{% if not S_AVATARS %} checked="checked"{% endif %}> {{ lang('NO') }}</label>
 			</dd>
 		</dl>
 		{% if S_CHANGE_CENSORS %}
 			<dl>
 				<dt><label for="wordcensor1">{{ lang('DISABLE_CENSORS') }}{{ lang('COLON') }}</label></dt>
 				<dd>
-					<label for="wordcensor1"><input type="radio" name="wordcensor" id="wordcensor1" value="1"{% if S_DISABLE_CENSORS %} checked="checked"{% endif %} /> {{ lang('YES') }}</label> 
-					<label for="wordcensor0"><input type="radio" name="wordcensor" id="wordcensor0" value="0"{% if not S_DISABLE_CENSORS %} checked="checked"{% endif %} /> {{ lang('NO') }}</label>
+					<label for="wordcensor1"><input type="radio" name="wordcensor" id="wordcensor1" value="1"{% if S_DISABLE_CENSORS %} checked="checked"{% endif %}> {{ lang('YES') }}</label>
+					<label for="wordcensor0"><input type="radio" name="wordcensor" id="wordcensor0" value="0"{% if not S_DISABLE_CENSORS %} checked="checked"{% endif %}> {{ lang('NO') }}</label>
 				</dd>
 			</dl>
 		{% endif %}
@@ -86,7 +88,7 @@
 
 
 <fieldset class="submit-buttons">
-	{S_HIDDEN_FIELDS}<input type="reset" value="{{ lang('RESET') }}" name="reset" class="btn btn-default">&nbsp; 
+	{S_HIDDEN_FIELDS}<input type="reset" value="{{ lang('RESET') }}" name="reset" class="btn btn-warning">&nbsp;
 	<input type="submit" name="submit" value="{{ lang('SUBMIT') }}" class="btn btn-success">
 	{S_FORM_TOKEN}
 </fieldset>

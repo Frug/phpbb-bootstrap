@@ -10,7 +10,7 @@
 	margin-top: 10px;
 }
 
-.m-t-0 {
+.m-t-0, .first {
 	margin-top:0;
 }
 
@@ -93,6 +93,11 @@
 }
 .topics .pagination-sm > li > a, .topics .pagination-sm > li > span{
 	padding: 2px 7px
+}
+
+#topicreview {
+    height: 400px;
+    overflow-y: scroll;
 }
 
 .btn-text{
