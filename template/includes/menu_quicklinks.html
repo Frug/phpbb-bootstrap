@@ -1,0 +1,29 @@
+<li class="dropdown">
+	<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ lang('QUICK_LINKS') }}<span class="caret"></span></a>
+	<ul class="dropdown-menu">
+		<!-- EVENT navbar_header_quick_links_before -->
+
+	{% if S_DISPLAY_SEARCH %}
+		{% if S_REGISTERED_USER %}
+		<li class="small-icon icon-search-self"><a href="{U_SEARCH_SELF}" role="menuitem">{{ lang('SEARCH_SELF') }}</a></li>
+		{% endif %}
+		{% if S_USER_LOGGED_IN %}
+		<li class="small-icon icon-search-new"><a href="{U_SEARCH_NEW}" role="menuitem">{{ lang('SEARCH_NEW') }}</a></li>
+		{% endif %}
+		{% if S_LOAD_UNREADS %}
+		<li class="small-icon icon-search-unread"><a href="{U_SEARCH_UNREAD}" role="menuitem">{{ lang('SEARCH_UNREAD') }}</a></li>
+		{% endif %}
+		<li class="small-icon icon-search-unanswered"><a href="{U_SEARCH_UNANSWERED}" role="menuitem">{{ lang('SEARCH_UNANSWERED') }}</a></li>
+		<li class="small-icon icon-search-active"><a href="{U_SEARCH_ACTIVE_TOPICS}" role="menuitem">{{ lang('SEARCH_ACTIVE_TOPICS') }}</a></li>
+		<li role="separator" class="divider"></li>
+		<li class="small-icon icon-search"><a href="{U_SEARCH}" role="menuitem">{{ lang('SEARCH') }}</a></li>
+	{% endif %}
+	{% if not S_IS_BOT and (S_DISPLAY_MEMBERLIST or U_TEAM) %}
+		<li class="separator"></li>
+		{% if S_DISPLAY_MEMBERLIST %}<li class="small-icon icon-members"><a href="{U_MEMBERLIST}" role="menuitem">{{ lang('MEMBERLIST') }}</a></li>{% endif %}
+		{% if U_TEAM %}<li class="small-icon icon-team"><a href="{U_TEAM}" role="menuitem">{{ lang('THE_TEAM') }}</a></li>{% endif %}
+	{% endif %}
+		
+		<!-- EVENT navbar_header_quick_links_after -->
+	</ul>
+</li>

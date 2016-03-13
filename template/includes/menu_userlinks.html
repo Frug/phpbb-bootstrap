@@ -1,0 +1,75 @@
+{% if S_REGISTERED_USER %}
+
+	{% if S_NOTIFICATIONS_DISPLAY %}
+		<li class="dropdown">
+			<a href="{U_VIEW_ALL_NOTIFICATIONS}" id="notification_list_button" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+				{{ lang('NOTIFICATIONS') }} [<b>{NOTIFICATIONS_COUNT}</b>] <span class="caret"></span>
+			</a>
+			<ul class="dropdown-menu" id="notification_list" role="menu">
+				<li><a href="{U_NOTIFICATION_SETTINGS}">{{ lang('SETTINGS') }}</a></li>
+				{% if NOTIFICATIONS_COUNT %}
+					<li id="mark_all_notifications"><a href="{U_MARK_ALL_NOTIFICATIONS}" data-ajax="notification.mark_all_read">{{ lang('MARK_ALL_READ') }}</a></li>
+				{% endif %}
+				<li role="separator" class="divider"></li>
+				{% if loops.notifications is empty %}
+					<li class="dropdown-text">{{ lang('NO_NOTIFICATIONS') }}</li>
+				{% endif %}
+				<!-- BEGIN notifications -->
+				<li class="{% if notifications.UNREAD %} bg2{% endif %}{% if notifications.STYLING %} {notifications.STYLING}{% endif %}{% if not notifications.URL %} no-url{% endif %}">
+					{% if notifications.URL %}
+					<a class="notification-block" href="{% if notifications.UNREAD %}{notifications.U_MARK_READ}" data-real-url="{notifications.URL}{% else %}{notifications.URL}{% endif %}">
+					{% endif %}
+					{% if notifications.AVATAR %}{notifications.AVATAR}{% else %}<img src="{T_THEME_PATH}/images/no_avatar.gif" alt="">{% endif %}
+						<div class="notification_text">
+							<p class="notification-title">{notifications.FORMATTED_TITLE}</p>
+							{% if notifications.REFERENCE %}<p class="notification-reference">{notifications.REFERENCE}</p>{% endif %}
+							{% if notifications.FORUM %}<p class="notification-forum">{notifications.FORUM}</p>{% endif %}
+							{% if notifications.REASON %}<p class="notification-reason">{notifications.REASON}</p>{% endif %}
+							<p class="notification-time">{notifications.TIME}</p>
+						</div>
+					{% if notifications.URL %}</a>{% endif %}
+					{% if notifications.UNREAD %}
+						<a href="{notifications.U_MARK_READ}" class="mark_read icon-mark" data-ajax="notification.mark_read" title="{{ lang('MARK_READ') }}"></a>
+					{% endif %}
+				</li>
+				<!-- END notifications -->
+
+				<li role="separator" class="divider"></li>
+				<li><a href="{U_VIEW_ALL_NOTIFICATIONS}">{{ lang('SEE_ALL') }}</a></li>
+			</ul>
+
+		</li>
+	{% endif %}
+
+	{% if S_DISPLAY_PM %}
+		<li class="small-icon icon-pm" data-skip-responsive="true">
+			<a href="{U_PRIVATEMSGS}" role="menuitem"><span>{{ lang('PRIVATE_MESSAGES') }} [</span><strong>{PRIVATE_MESSAGE_COUNT}</strong><span>]</span></a>
+		</li>
+	{% endif %}
+
+	<li id="username_logged_in" class="dropdown{% if CURRENT_USER_AVATAR %} no-bulletin{% endif %}">
+		<!-- EVENT navbar_header_username_prepend -->
+		<a href="{U_PROFILE}" class="header-avatar dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+			{% if CURRENT_USER_AVATAR %}{CURRENT_USER_AVATAR} {% endif %}{CURRENT_USERNAME_SIMPLE}
+		</a>
+		<ul class="dropdown-menu" role="menu">
+			{% if U_RESTORE_PERMISSIONS %}<li class="small-icon icon-restore-permissions"><a href="{U_RESTORE_PERMISSIONS}">{{ lang('RESTORE_PERMISSIONS') }}</a></li>{% endif %}
+			<!-- EVENT navbar_header_profile_list_before -->
+			<li class="small-icon icon-ucp"><a href="{U_PROFILE}" title="{{ lang('PROFILE') }}" role="menuitem">{{ lang('PROFILE') }}</a></li>
+			<li class="small-icon icon-profile"><a href="{U_USER_PROFILE}" title="{{ lang('READ_PROFILE') }}" role="menuitem">{{ lang('READ_PROFILE') }}</a></li>
+			<!-- EVENT navbar_header_profile_list_after -->
+			<li role="separator" class="divider"></li>
+			<li class="small-icon icon-logout"><a href="{U_LOGIN_LOGOUT}" title="{{ lang('LOGIN_LOGOUT') }}" accesskey="x" role="menuitem">{{ lang('LOGIN_LOGOUT') }}</a></li>
+		</ul>
+		<!-- EVENT navbar_header_username_append -->
+	</li>
+
+{% else %}
+
+	<li class="small-icon icon-logout"><a href="{U_LOGIN_LOGOUT}" title="{{ lang('LOGIN_LOGOUT') }}" accesskey="x" role="menuitem">{{ lang('LOGIN_LOGOUT') }}</a></li>
+	{% if S_REGISTER_ENABLED and not (S_SHOW_COPPA or S_REGISTRATION) %}
+	<li class="small-icon icon-register" data-skip-responsive="true"><a href="{U_REGISTER}" role="menuitem">{{ lang('REGISTER') }}</a></li>
+	{% endif %}
+	<!-- EVENT navbar_header_logged_out_content -->
+
+{% endif %}

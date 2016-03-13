@@ -18,6 +18,12 @@
 	padding-right:0;
 }
 
+@media (min-width: 768px) {
+  .navbar-left {
+    margin-left: -15px;
+  }
+}
+
 .skiplink a {
 	padding: 6px;
 	position: absolute;
