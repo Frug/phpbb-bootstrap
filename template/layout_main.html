@@ -18,9 +18,8 @@
 		{% if S_ENABLE_FEEDS_FORUM and S_FORUM_ID %}<link rel="alternate" type="application/atom+xml" title="{{ lang('FEED') }} - {{ lang('FORUM') }} - {FORUM_NAME}" href="{U_FEED}?f={S_FORUM_ID}">{% endif %}
 		{% if S_ENABLE_FEEDS_TOPIC and S_TOPIC_ID %}<link rel="alternate" type="application/atom+xml" title="{{ lang('FEED') }} - {{ lang('TOPIC') }} - {TOPIC_TITLE}" href="{U_FEED}?f={S_FORUM_ID}&amp;t={S_TOPIC_ID}">{% endif %}
 	{% endif %}
-	{% if U_CANONICAL %}
-	<link rel="canonical" href="{{ U_CANONICAL }}">
-	{% endif %}
+
+	{% if U_CANONICAL %}<link rel="canonical" href="{{ U_CANONICAL }}">{% endif %}
 	{% if S_ALLOW_CDN %}
 	<script>
 		WebFontConfig = {
@@ -217,20 +216,20 @@
 				<!-- EVENT overall_footer_breadcrumb_append -->
 			</li>
 			{% if U_WATCH_FORUM_LINK and not S_IS_BOT %}
-				<li class="small-icon icon-{% if S_WATCHING_FORUM %}unsubscribe{% else %}subscribe{% endif %}" data-last-responsive="true"><a href="{U_WATCH_FORUM_LINK}" title="{S_WATCH_FORUM_TITLE}" data-ajax="toggle_link" data-toggle-class="small-icon icon-{% if not S_WATCHING_FORUM %}unsubscribe{% else %}subscribe{% endif %}" data-toggle-text="{S_WATCH_FORUM_TOGGLE}" data-toggle-url="{U_WATCH_FORUM_TOGGLE}">{S_WATCH_FORUM_TITLE}</a></li>
+				<li class="small-icon icon-{% if S_WATCHING_FORUM %}unsubscribe{% else %}subscribe{% endif %}"><a href="{U_WATCH_FORUM_LINK}" title="{S_WATCH_FORUM_TITLE}" data-ajax="toggle_link" data-toggle-class="small-icon icon-{% if not S_WATCHING_FORUM %}unsubscribe{% else %}subscribe{% endif %}" data-toggle-text="{S_WATCH_FORUM_TOGGLE}" data-toggle-url="{U_WATCH_FORUM_TOGGLE}">{S_WATCH_FORUM_TITLE}</a></li>
 			{% endif %}
 
 			<!-- EVENT overall_footer_timezone_before -->
 			<li class="rightside">{S_TIMEZONE}</li>
 			<!-- EVENT overall_footer_timezone_after -->
-			<!-- IF not S_IS_BOT -->
-				<li class="small-icon icon-delete-cookies rightside"><a href="{U_DELETE_COOKIES}" data-ajax="true" data-refresh="true" role="menuitem">{{ lang('DELETE_COOKIES') }}</a></li>
-				<!-- IF S_DISPLAY_MEMBERLIST --><li class="small-icon icon-members rightside" data-last-responsive="true"><a href="{U_MEMBERLIST}" title="{{ lang('MEMBERLIST_EXPLAIN') }}" role="menuitem">{{ lang('MEMBERLIST') }}</a></li><!-- ENDIF -->
-			<!-- ENDIF -->
+			{% if not S_IS_BOT %}
+				<li class="small-icon icon-delete-cookies"><a href="{U_DELETE_COOKIES}" data-ajax="true" data-refresh="true" role="menuitem">{{ lang('DELETE_COOKIES') }}</a></li>
+				{% if S_DISPLAY_MEMBERLIST %}<li class="small-icon icon-members"><a href="{U_MEMBERLIST}" title="{{ lang('MEMBERLIST_EXPLAIN') }}" role="menuitem">{{ lang('MEMBERLIST') }}</a></li>{% endif %}
+			{% endif %}
 			<!-- EVENT overall_footer_teamlink_before -->
-			<!-- IF U_TEAM --><li class="small-icon icon-team rightside" data-last-responsive="true"><a href="{U_TEAM}" role="menuitem">{{ lang('THE_TEAM') }}</a></li><!-- ENDIF -->
+			{% if U_TEAM %}<li class="small-icon icon-team"><a href="{U_TEAM}" role="menuitem">{{ lang('THE_TEAM') }}</a></li>{% endif %}
 			<!-- EVENT overall_footer_teamlink_after -->
-			<!-- IF U_CONTACT_US --><li class="small-icon icon-contact rightside" data-last-responsive="true"><a href="{U_CONTACT_US}" role="menuitem">{{ lang('CONTACT_US') }}</a></li><!-- ENDIF -->
+			{% if U_CONTACT_US %}<li class="small-icon icon-contact"><a href="{U_CONTACT_US}" role="menuitem">{{ lang('CONTACT_US') }}</a></li>{% endif %}
 		</ul>
 	</div>
 
@@ -252,16 +251,16 @@
 	<div id="phpbb_alert" class="modal-dialog" data-l-err="{{ lang('ERROR') }}" data-l-timeout-processing-req="{{ lang('TIMEOUT_PROCESSING_REQ') }}">
 		<div class="modal-content">
 			<div class="modal-header">
-				<a href="#" class="alert_close"></a>
-				<h3 class="alert_title">&nbsp;</h3><p class="alert_text"></p>
+				<button type="button" class="close alert_close pull-right" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h3 class="alert_title modal-title">&nbsp;</h3>
+			</div>
+			<div class="modal-body">
+				<p class="alert_text"></p>
 			</div>
 		</div>
 	</div>
 	<div id="phpbb_confirm" class="modal-dialog">
-		<div class="modal-content">
-			<a href="#" class="alert_close"></a>
-			<div class="alert_text"></div>
-		</div>
+		<div class="alert_text"></div>
 	</div>
 </footer>
 
