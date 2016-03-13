@@ -2,7 +2,7 @@
 
 {% block inner_content %}
 <div class="panel-heading">
-	{{ lang('TITLE') }} <span class="small">[ <a href="{U_USER_PROFILE}" title="{{ lang('VIEW_PROFILE') }}">{{ lang('VIEW_PROFILE') }}</a> ]</span>
+    <h2 class="panel-title pull-left">{{ lang('TITLE') }}</h2> &nbsp; <span class="small">[ <a href="{U_USER_PROFILE}" title="{{ lang('VIEW_PROFILE') }}">{{ lang('VIEW_PROFILE') }}</a> ]</span>
 </div>
 
 <form id="ucp" method="post" action="{S_UCP_ACTION}"{S_FORM_ENCTYPE}>

@@ -1,13 +1,17 @@
 {% extends "layout_ucp.html" %}
 
 {% block inner_content %}
-<form id="ucp" method="post" action="{S_UCP_ACTION}"{S_FORM_ENCTYPE}>
+<div class="panel-heading">
+	<h2 class="panel-title">{{ lang('TITLE') }}</h2>
+</div>
 
-<h2>{L_TITLE}</h2>
+<div class="panel-body">
+<form id="ucp" method="post" action="{S_UCP_ACTION}"{S_FORM_ENCTYPE}>
 
 {% include "includes/ucp_avatar_options.html" %}
 
 {S_HIDDEN_FIELDS}
 {S_FORM_TOKEN}
 </form>
+</div>
 {% endblock %}
