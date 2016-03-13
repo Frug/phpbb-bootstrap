@@ -51,12 +51,10 @@
 <div id="wrap">
 	<a id="top" class="anchor" accesskey="t"></a>
 	<div id="page-body" role="main">
-
-        {% block content %}
-        Foobar.
-        {% endblock %}
-        
-    </div>
+		{% block content %}
+		Foobar.
+		{% endblock %}
+	</div>
 
 	<div class="copyright" role="contentinfo">{CREDIT_LINE}
 		<!-- IF TRANSLATION_INFO --><br />{TRANSLATION_INFO}<!-- ENDIF -->
@@ -81,8 +79,8 @@
 <script type="text/javascript" src="{T_JQUERY_LINK}"></script>
 <!-- IF S_ALLOW_CDN --><script type="text/javascript">window.jQuery || document.write(unescape('%3Cscript src="{T_ASSETS_PATH}/javascript/jquery.min.js?assets_version={T_ASSETS_VERSION}" type="text/javascript"%3E%3C/script%3E'));</script><!-- ENDIF -->
 <script type="text/javascript" src="{T_ASSETS_PATH}/javascript/core.js?assets_version={T_ASSETS_VERSION}"></script>
-<!-- INCLUDEJS forum_fn.js -->
-<!-- INCLUDEJS ajax.js -->
+<!-- INCLUDEJS js/forum_fn.js -->
+<!-- INCLUDEJS js/ajax.js -->
 
 <!-- EVENT simple_footer_after -->
 

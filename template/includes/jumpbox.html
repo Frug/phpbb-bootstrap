@@ -1,23 +1,23 @@
 {% if S_VIEWTOPIC %}
-	<p class="jumpbox-return"><a href="{U_VIEW_FORUM}" class="left-box arrow-{S_CONTENT_FLOW_BEGIN}" accesskey="r">{L_RETURN_TO_FORUM}</a></p>
+	<p class="jumpbox-return"><a href="{U_VIEW_FORUM}" class="left-box arrow-{S_CONTENT_FLOW_BEGIN}" accesskey="r">{{ lang('RETURN_TO_FORUM') }}</a></p>
 {% elseif S_VIEWFORUM %}
-	<p class="jumpbox-return"><a href="{U_INDEX}" class="left-box arrow-{S_CONTENT_FLOW_BEGIN}" accesskey="r">{L_RETURN_TO_INDEX}</a></p>
+	<p class="jumpbox-return"><a href="{U_INDEX}" class="left-box arrow-{S_CONTENT_FLOW_BEGIN}" accesskey="r">{{ lang('RETURN_TO_INDEX') }}</a></p>
 {% elseif SEARCH_TOPIC %}
-	<p class="jumpbox-return"><a class="left-box arrow-{S_CONTENT_FLOW_BEGIN}" href="{U_SEARCH_TOPIC}" accesskey="r">{L_RETURN_TO_TOPIC}</a></p>
+	<p class="jumpbox-return"><a class="left-box arrow-{S_CONTENT_FLOW_BEGIN}" href="{U_SEARCH_TOPIC}" accesskey="r">{{ lang('RETURN_TO_TOPIC') }}</a></p>
 {% elseif S_SEARCH_ACTION %}
-	<p class="jumpbox-return"><a class="left-box arrow-{S_CONTENT_FLOW_BEGIN}" href="{U_SEARCH}" title="{L_SEARCH_ADV}" accesskey="r">{L_GO_TO_SEARCH_ADV}</a></p>
+	<p class="jumpbox-return"><a class="left-box arrow-{S_CONTENT_FLOW_BEGIN}" href="{U_SEARCH}" title="{{ lang('SEARCH_ADV') }}" accesskey="r">{{ lang('GO_TO_SEARCH_ADV') }}</a></p>
 {% endif %}
 
 {% if S_DISPLAY_JUMPBOX %}
 	<div class="dropdown-container dropdown-container-{S_CONTENT_FLOW_END}{% if not S_IN_MCP %} dropdown-up{% endif %} dropdown-{S_CONTENT_FLOW_BEGIN} dropdown-button-control" id="jumpbox">
-		<span title="<!-- IF S_IN_MCP and S_MERGE_SELECT -->{L_SELECT_TOPICS_FROM}<!-- ELSEIF S_IN_MCP -->{L_MODERATE_FORUM}<!-- ELSE -->{L_JUMP_TO}<!-- ENDIF -->" class="dropdown-trigger button dropdown-select">
+		<span title="<!-- IF S_IN_MCP and S_MERGE_SELECT -->{{ lang('SELECT_TOPICS_FROM') }}<!-- ELSEIF S_IN_MCP -->{{ lang('MODERATE_FORUM') }}<!-- ELSE -->{{ lang('JUMP_TO') }}<!-- ENDIF -->" class="dropdown-trigger button dropdown-select">
 			{% if S_IN_MCP and S_MERGE_SELECT %}
-            {L_SELECT_TOPICS_FROM}
-            {% elseif S_IN_MCP %}
-            {L_MODERATE_FORUM}
-            {% else %}
-            {L_JUMP_TO}
-            {% endif %}
+			{{ lang('SELECT_TOPICS_FROM') }}
+			{% elseif S_IN_MCP %}
+			{{ lang('MODERATE_FORUM') }}
+			{% else %}
+			{{ lang('JUMP_TO') }}
+			{% endif %}
 		</span>
 		<div class="dropdown hidden">
 			<div class="pointer"><div class="pointer-inner"></div></div>
@@ -30,6 +30,4 @@
 			</ul>
 		</div>
 	</div>
-{% else %}
-	<br><br>
 {% endif %}
